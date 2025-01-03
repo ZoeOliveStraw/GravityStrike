@@ -51,10 +51,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyThrusters()
     {
-        _rigidBody2D.AddForce(_moveVector * thrusterStrength, ForceMode2D.Impulse);
-        if (_rigidBody2D.velocity.magnitude > maxVelocity)
+        _rigidBody2D.AddForce(_moveVector * (thrusterStrength * Time.deltaTime), ForceMode2D.Impulse);
+        if (_rigidBody2D.linearVelocity.magnitude > maxVelocity)
         {
-            _rigidBody2D.velocity = _rigidBody2D.velocity.normalized * maxVelocity;
+            _rigidBody2D.linearVelocity = _rigidBody2D.linearVelocity.normalized * maxVelocity;
         }
     }
 
