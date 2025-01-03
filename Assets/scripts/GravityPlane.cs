@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class GravityPlane
 {
     // 2D grid of points
-    public Vector2[,] Points { get; private set; }
+    public list<Point> Points { get; private set; }
 
     // Wells (positions of interest in the plane)
     public List<Vector2> Wells { get; private set; }
@@ -12,6 +12,8 @@ public class GravityPlane
     // Grid dimensions
     public int Rows { get; private set; }
     public int Cols { get; private set; }
+    public float Resolution { get; private set; }
+    public float GravitationalConstant = 1;
 
     // Constructor
     public GravityPlane(int height, int width, float res)
@@ -24,46 +26,48 @@ public class GravityPlane
         // Calculate rows and columns based on resolution
         Rows = (int)(height / res);
         Cols = (int)(width / res);
+        Resolution = res;
 
-        // Initialize the grid
-        Points = new Vector2[Rows, Cols];
-
-        // Initialize wells
-        Wells = new List<Vector2>();
-    }
-
-    // Method to place wells
-    public void PlaceWells(List<Vector2> wells)
-    {
-        if (wells == null)
+        // Initialize the grid points
+        for (int i = 0; i < Rows; i++)
         {
-            throw new System.ArgumentNullException(nameof(wells));
-        }
-
-        Wells.AddRange(wells);
-    }
-
-    // Example method to get the nearest well to a point
-    public Vector2 GetNearestWell(Vector2 point)
-    {
-        if (Wells.Count == 0)
-        {
-            throw new System.InvalidOperationException("No wells have been placed.");
-        }
-
-        Vector2 nearest = Wells[0];
-        float minDistance = Vector2.Distance(point, nearest);
-
-        foreach (var well in Wells)
-        {
-            float distance = Vector2.Distance(point, well);
-            if (distance < minDistance)
+            for (int j = 0; j < Cols; j++)
             {
-                minDistance = distance;
-                nearest = well;
+                Points[i, j] = new Point(j, i);
             }
         }
 
-        return nearest;
+        // Initialize wells
+        Wells = new List<Well>();
+    }
+
+    // Method to place wells
+    public void PlaceWells(List<Well> wells)
+    {
+        Wells.AddRange(wells);
+
+        // recalculate forces
+        foreach (var point in Points)
+        {
+            foreach (var well in Wells)
+            {
+                // Calculate distance from point to well
+                float distance = Vector2.Distance(point.Position, well);
+                Vector2 direction = (well - point.Position).normalized;
+                float magnitude_multiplier = GravitationalConstant * well.mass / (distance^2);
+                point.updateForce(magnitude_multiplier,direction);
+            }
+        }
+    }
+
+    // Example method to get the nearest point to an object
+    public Vector2 GetNearestPoint(float x, float y)
+    {
+        // Clamp the position to grid boundaries
+        int row = Mathf.Clamp(Mathf.RoundToInt(y / Resolution), 0, Rows - 1);
+        int col = Mathf.Clamp(Mathf.RoundToInt(x / Resolution), 0, Cols - 1);
+
+        // Return the corresponding grid point
+        return Points[row, col];
     }
 }
