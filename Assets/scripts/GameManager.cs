@@ -1,16 +1,23 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public static GameManager Instance;
+    
+    [SerializeField] private StageSpawner  stageSpawner;
+    [SerializeField] public SO_PhysicsConstants physicsConstants;
 
-    // Update is called once per frame
-    void Update()
+    private List<Well> _wells;
+    private List<Transform> _enemyTransforms;
+
+    private void Start()
     {
-        
+        if(Instance != null && Instance != this) Destroy(this.gameObject);
+        else
+        {
+            Instance = this;
+        }
     }
 }
