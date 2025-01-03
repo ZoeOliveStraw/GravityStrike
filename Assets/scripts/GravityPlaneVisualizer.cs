@@ -10,12 +10,16 @@ public class GravityPlaneVisualizer : MonoBehaviour
     public Color wellColor = Color.red;   // Color for the wells
 
     public GameObject spherePrefab;      // Prefab for the sphere representing wells
-    public GameObject cubePrefab;        // Prefab for the grid points (now a cube)
+    public GameObject cubePrefab;
+    
+    public int xSize;
+    public int ySize;
+    public int resolution;        // Prefab for the grid points (now a cube)
 
     void Start()
     {
         // Initialize the GravityPlane with height, width, and resolution
-        gravityPlane = new GravityPlane(10, 10, 1); // A 10x10 grid with resolution of 1
+        gravityPlane = new GravityPlane(xSize, ySize, resolution); 
 
         // Initialize wells (for testing purposes, you can adjust well positions and masses)
         gravityPlane.PlaceWells(new Well[] {
@@ -99,33 +103,20 @@ public class GravityPlaneVisualizer : MonoBehaviour
         sphere.GetComponent<Renderer>().material.color = wellColor;
         sphere.transform.localScale = new Vector3(sphereRadius, sphereRadius, sphereRadius);  // Set sphere size
     }
-// Method to create a point as a 3D rectangle with dynamic color
-void CreatePoint(Vector2 position, Point point)
-{
-    // Create a new cube at the specified position
-    GameObject pointObject = Instantiate(cubePrefab, new Vector3(position.x, 0, position.y), Quaternion.identity);
-
-    // Set the scale to form the rectangle (X and Z dimensions)
-    pointObject.transform.localScale = new Vector3(pointWidth, 1, pointHeight);
-
-    // Map MagnitudeMultiplier to a color
-    Color pointColor = MapMagnitudeToColor(point.MagnitudeMultiplier);
-
-    // Optionally change the color of the point
-    pointObject.GetComponent<Renderer>().material.color = pointColor;
-}
-
-// Helper method to map MagnitudeMultiplier to a color
-Color MapMagnitudeToColor(float magnitude)
-{
-    // You can use a color gradient or directly map the value to a color range
-    // For example, use a simple gradient where low values are blue and high values are red
-
-    // Normalize magnitude to a range from 0 to 1
-    float normalizedMagnitude = Mathf.Clamp01(magnitude / 10f);  // Scale the magnitude for color range, adjust as needed
-
-    // Return a color based on the magnitude
-    return Color.Lerp(Color.blue, Color.red, normalizedMagnitude); // Transition from blue to red
-}
+    // Method to create a point as a 3D rectangle with dynamic color
+    void CreatePoint(Vector2 position, Point point)
+    {
+        GameObject pointObject = Instantiate(cubePrefab, new Vector3(position.x, 0, position.y), Quaternion.identity);
+        pointObject.transform.localScale = new Vector3(pointWidth, 1, pointHeight);
+        Color pointColor = MapMagnitudeToColor(point.Force.magnitude);
+        pointObject.GetComponent<Renderer>().material.color = pointColor;
+    }
+    
+    // Helper method to map MagnitudeMultiplier to a color
+    Color MapMagnitudeToColor(float magnitude)
+    {
+        float normalizedMagnitude = Mathf.Clamp01(magnitude / 10f);  // Scale the magnitude for color range, adjust as needed
+        return Color.Lerp(Color.blue, Color.red, normalizedMagnitude); // Transition from blue to red
+    }
 
 }

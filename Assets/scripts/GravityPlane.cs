@@ -16,7 +16,7 @@ public class GravityPlane
     public float GravitationalConstant = 1;
 
     // Constructor
-    public GravityPlane(int height, int width, float res)
+    public GravityPlane(int height, int width, int res)
     {
         if (res <= 0)
         {
@@ -24,17 +24,17 @@ public class GravityPlane
         }
 
         // Calculate rows and columns based on resolution
-        Rows = (int)(height / res);
-        Cols = (int)(width / res);
+        Rows = (int)(height * res);
+        Cols = (int)(width * res);
         Resolution = res;
-        Points = new Point[Rows, Cols];
+        Points = new Point[Rows,Cols];
 
         // Initialize the grid points
         for (int i = 0; i < Rows; i++)
         {
             for (int j = 0; j < Cols; j++)
             {
-                Points[i, j] = new Point(j, i);
+                Points[i, j] = new Point((float) width * ((float) j / (float) Cols), (float) height * ((float) i / (float) Rows));
             }
         }
 
@@ -47,19 +47,24 @@ public class GravityPlane
     {
         Wells.AddRange(wells);
 
+        float scale;
+        float distance;
+        Vector2 direction;
+
         // recalculate forces
         foreach (var point in Points)
         {
             Vector2 total = new Vector2(0,0);
+        
             foreach (var well in Wells)
             {
                 // Calculate distance from point to well
-                float distance = Vector2.Distance(point.Position, well.Position);
-                Vector2 direction = (well.Position - point.Position).normalize;
-                float magnitude_multiplier = GravitationalConstant * well.Mass / (distance*distance);
-                // total = total + 
+                distance = Vector2.Distance(point.Position, well.Position);
+                direction = (well.Position - point.Position).normalized;
+                scale = GravitationalConstant * well.Mass / (distance*distance);
+                total = total + scale * direction;
             }
-            point.updateForce(magnitude_multiplier,direction);
+            point.Force = total;
         }
     }
 
