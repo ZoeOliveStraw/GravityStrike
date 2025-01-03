@@ -4,10 +4,10 @@ using System.Collections.Generic;
 public class GravityPlane
 {
     // 2D grid of points
-    public list<Point> Points { get; private set; }
+    public Point[,] Points { get; private set; }
 
     // Wells (positions of interest in the plane)
-    public List<Vector2> Wells { get; private set; }
+    public Well[] Wells { get; private set; }
 
     // Grid dimensions
     public int Rows { get; private set; }
@@ -38,11 +38,11 @@ public class GravityPlane
         }
 
         // Initialize wells
-        Wells = new List<Well>();
+        Wells = new Well[];
     }
 
     // Method to place wells
-    public void PlaceWells(List<Well> wells)
+    public void PlaceWells(Well[] wells)
     {
         Wells.AddRange(wells);
 
@@ -52,16 +52,16 @@ public class GravityPlane
             foreach (var well in Wells)
             {
                 // Calculate distance from point to well
-                float distance = Vector2.Distance(point.Position, well);
-                Vector2 direction = (well - point.Position).normalized;
-                float magnitude_multiplier = GravitationalConstant * well.mass / (distance^2);
+                float distance = Vector2.Distance(point.Position, well.Position);
+                Vector2 direction = (well.Position - point.Position).normalized;
+                float magnitude_multiplier = GravitationalConstant * well.Mass / (distance*distance);
                 point.updateForce(magnitude_multiplier,direction);
             }
         }
     }
 
     // Example method to get the nearest point to an object
-    public Vector2 GetNearestPoint(float x, float y)
+    public Point GetNearestPoint(float x, float y)
     {
         // Clamp the position to grid boundaries
         int row = Mathf.Clamp(Mathf.RoundToInt(y / Resolution), 0, Rows - 1);
