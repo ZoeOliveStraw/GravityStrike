@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    [SerializeField] private Camera cam;
+    [SerializeField] public Camera cam;
     [SerializeField] private Transform camTarget;
     [SerializeField] private float camLerpSpeed;
     [SerializeField] private float moveVectorOffset;
@@ -11,14 +11,21 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
+        GetCameraReference();
         camTarget.position = new Vector3(camTarget.position.x, camTarget.position.y, cam.transform.position.z);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(cam == null) GetCameraReference();
         CalculateCamTarget();
         LerpCamTowardsTarget();
+    }
+
+    private void GetCameraReference()
+    {
+        cam = GameManager.Instance.sceneCamera;
     }
 
     private void CalculateCamTarget()

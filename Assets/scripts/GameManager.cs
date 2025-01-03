@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private StageSpawner  stageSpawner;
     [SerializeField] public SO_PhysicsConstants physicsConstants;
+    [SerializeField] public Camera sceneCamera;
 
     private List<Well> _wells;
     private List<Transform> _enemyTransforms;
@@ -19,5 +20,12 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        InitializeGame();
+    }
+
+    private void InitializeGame()
+    {
+        StageInfo info  = new StageInfo();
+        stageSpawner.SpawnStage(info);
     }
 }

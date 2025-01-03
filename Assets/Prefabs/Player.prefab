@@ -4917,7 +4917,7 @@ MonoBehaviour:
   _rigidBody2D: {fileID: 860513616829947308}
   thrusterStrength: 15
   angleToThruster: 75
-  rotationSpeed: 5
+  rotationSpeed: 10
   maxVelocity: 8
   thrusterParticles: {fileID: 1458815644690473800}
   minMaxParticleRate: {x: 15, y: 45}
@@ -4936,7 +4936,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   camTarget: {fileID: 8420034046637133568}
-  camLerpSpeed: 20
+  camLerpSpeed: 5
   moveVectorOffset: 2
   rb: {fileID: 0}
 --- !u!212 &1368766743865504215
@@ -5020,7 +5020,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &2531943670960926432
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
