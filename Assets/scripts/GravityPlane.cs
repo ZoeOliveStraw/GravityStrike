@@ -27,6 +27,7 @@ public class GravityPlane
         Rows = (int)(height / res);
         Cols = (int)(width / res);
         Resolution = res;
+        Points = new Point[Rows, Cols];
 
         // Initialize the grid points
         for (int i = 0; i < Rows; i++)
@@ -49,14 +50,16 @@ public class GravityPlane
         // recalculate forces
         foreach (var point in Points)
         {
+            Vector2 total = new Vector2(0,0);
             foreach (var well in Wells)
             {
                 // Calculate distance from point to well
                 float distance = Vector2.Distance(point.Position, well.Position);
-                Vector2 direction = (well.Position - point.Position).normalized;
+                Vector2 direction = (well.Position - point.Position).normalize;
                 float magnitude_multiplier = GravitationalConstant * well.Mass / (distance*distance);
-                point.updateForce(magnitude_multiplier,direction);
+                // total = total + 
             }
+            point.updateForce(magnitude_multiplier,direction);
         }
     }
 
