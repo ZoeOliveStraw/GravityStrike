@@ -4,8 +4,8 @@ using System.Collections.Generic;
 public class Point
 {
     public Vector2 Position;
-    public float Magnitude { get; set; }
-    public Vector2 Direction { get; set; }
+    public float MagnitudeMultiplier { get; set; }
+    public Vector2  Direction { get; set; }
 
     // Constructor to initialize the point with coordinates, magnitude, and direction
     public Point(int x, int y)
@@ -23,6 +23,6 @@ public class Point
 
     public Vector2 getForce(float mass)
     {
-        return new Vector2(mass * MagnitudeMultiplier, direction);
+        return  Direction * mass * MagnitudeMultiplier;
     }
 }

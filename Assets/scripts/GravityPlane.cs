@@ -7,7 +7,7 @@ public class GravityPlane
     public Point[,] Points { get; private set; }
 
     // Wells (positions of interest in the plane)
-    public Well[] Wells { get; private set; }
+    public List<Well> Wells { get; private set; }
 
     // Grid dimensions
     public int Rows { get; private set; }
@@ -38,7 +38,7 @@ public class GravityPlane
         }
 
         // Initialize wells
-        Wells = new Well[];
+        Wells = new ();
     }
 
     // Method to place wells
