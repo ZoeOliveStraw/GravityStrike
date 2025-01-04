@@ -12,7 +12,7 @@ public class PlayerCamera : MonoBehaviour
     private void Start()
     {
         GetCameraReference();
-        camTarget.position = new Vector3(camTarget.position.x, camTarget.position.y, cam.transform.position.z);
+        camTarget.position = new Vector3(camTarget.position.x, camTarget.position.y, transform.position.z - 10);
     }
 
     // Update is called once per frame
@@ -35,7 +35,7 @@ public class PlayerCamera : MonoBehaviour
         else offsetTarget = InputManager.MoveVector;
         Vector2 v2Pos = new Vector2(transform.position.x, transform.position.y);
         Vector2 targetPos = v2Pos + offsetTarget * moveVectorOffset;
-        camTarget.position = new Vector3(targetPos.x, targetPos.y, camTarget.position.z);
+        camTarget.position = new Vector3(targetPos.x, targetPos.y, transform.position.z - 10);
     }
 
     private void LerpCamTowardsTarget()
