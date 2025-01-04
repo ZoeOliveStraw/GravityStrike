@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     private void InitializeGame()
     {
-        
+        StageFactory f = new StageFactory(30, 30, 5);
+        stageSpawner.SpawnStage(f.Create());
     }
 }

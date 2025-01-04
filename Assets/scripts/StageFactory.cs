@@ -15,7 +15,6 @@ public class StageFactory
     }
 
     public StageInfo Create() {
-
         GravityPlane plane = generateGravityPlane();
         List<Well> wells = generateWells();
         List<Enemy> enemies = generateEnemies();
