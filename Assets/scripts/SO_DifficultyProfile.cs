@@ -4,10 +4,10 @@ using UnityEngine;
 public class SO_DifficultyProfile : ScriptableObject
 {
     [SerializeField] public string difficultyName;
-    [SerializeField] private Vector2Int starCountRange;
-    [SerializeField] private Vector2 starSizeRange;
-    [SerializeField] private Vector2Int enemyCountRange;
-    [SerializeField] private float minDistanceBetweenStarSurfaces;
+    [SerializeField] public Vector2Int starCountRange;
+    [SerializeField] public Vector2 starSizeRange;
+    [SerializeField] public Vector2Int enemyCountRange;
+    [SerializeField] public float minDistanceBetweenStarSurfaces;
 
     public int GetStarCount()
     {
