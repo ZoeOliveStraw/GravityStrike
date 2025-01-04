@@ -4,8 +4,10 @@ public class ProgressionManager : MonoBehaviour
 {
     public static ProgressionManager Instance;
 
-    public SO_DifficultyProfile difficulty;
-    public SO_PhysicsConstants physics;
+    public SO_DifficultyProfile difficultyProfile;
+    public SO_PhysicsConstants physicsProfile;
+
+    private int _stage = 0;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -14,11 +16,13 @@ public class ProgressionManager : MonoBehaviour
         else
         {
             Instance = this;
+            DontDestroyOnLoad(this);
         }
     }
 
-    public void SetDifficulty()
+    public void SetDifficulty(SO_DifficultyProfile difficulty, SO_PhysicsConstants physics)
     {
-        
+        difficultyProfile = difficulty;
+        physicsProfile = physics;
     }
 }
