@@ -89,12 +89,10 @@ public class StageFactory
 
             if (isValidLocation && temp_well != null)
             {
-                Debug.LogWarning("placing well");
                 wells.Add(temp_well);
             }
             else
             {
-                Debug.LogWarning("Could not find a valid position for a well after multiple attempts.");
                 break;
             }
         }

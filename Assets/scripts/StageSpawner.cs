@@ -15,12 +15,12 @@ public class StageSpawner : MonoBehaviour
     [SerializeField] private Transform starParent;
     [SerializeField] private Transform enemyParent;
     [SerializeField] private Transform gridPointParent;
-    public void SpawnStage(StageInfo stageInfo)
+    public GameObject SpawnStage(StageInfo stageInfo)
     {
         SpawnGrid(stageInfo.GravityPlane);
         SpawnStars(stageInfo.Wells);
         SpawnEnemies(stageInfo.Enemies);
-        SpawnPlayer(stageInfo.LevelWidth, stageInfo.LevelHeight);
+        return SpawnPlayer(stageInfo.LevelWidth, stageInfo.LevelHeight);
     }
     
     private void SpawnGrid(GravityPlane plane)
@@ -67,9 +67,9 @@ public class StageSpawner : MonoBehaviour
         
     }
 
-    private void SpawnPlayer(int x, int y)
+    private GameObject SpawnPlayer(int x, int y)
     {
         Vector3 pos = new Vector3((float) x / 2, (float) y / 2, 0);
-        Instantiate(playerPrefab, pos, Quaternion.identity);
+        return Instantiate(playerPrefab, pos, Quaternion.identity);
     }
 }

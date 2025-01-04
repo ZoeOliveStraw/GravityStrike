@@ -89,7 +89,6 @@ public class GravityPlane
         int col = Mathf.Clamp(Mathf.RoundToInt(pos.x * Resolution), 0, Cols - 1);
         
         Point point = Points[row, col];
-        Debug.LogWarning($"Position given: {pos}, Index Accessed: {row}, {col}");
         
         // Return the corresponding grid point
         return point.Force;

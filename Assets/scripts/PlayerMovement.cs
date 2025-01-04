@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float angleToThruster;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float maxVelocity;
+    [SerializeField] private float gravityScale;
     
     [Header("Thruster Particle system")]
     [SerializeField] private ParticleSystem thrusterParticles;
@@ -57,6 +58,13 @@ public class PlayerMovement : MonoBehaviour
             _rigidBody2D.linearVelocity = _rigidBody2D.linearVelocity.normalized * maxVelocity;
         }
     }
+    
+    private void ApplyGravity()
+    {
+        Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
+        Vector2 gravityForce = GameManager.Instance.GravityFromPosition(currentPosition) * (gravityScale * Time.deltaTime);
+        _rigidBody2D.AddForce(gravityForce, ForceMode2D.Impulse);
+    }
 
     private void RenderParticles()
     {
@@ -77,12 +85,5 @@ public class PlayerMovement : MonoBehaviour
             emission.rateOverTime = partRate;
         }
         else if(thrusterParticles.isPlaying) thrusterParticles.Stop();
-    }
-
-    private void ApplyGravity()
-    {
-        Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
-        Vector2 gravity = GameManager.Instance.GravityFromPosition(currentPosition);
-        Debug.LogWarning($"GRAVITY: {gravity.magnitude}");
     }
 }   

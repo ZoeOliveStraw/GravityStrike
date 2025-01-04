@@ -11,17 +11,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Camera sceneCamera;
     [SerializeField] public SO_DifficultyProfile difficultyProfile;
 
+    public GameObject player;
     private List<Well> _wells;
     private List<Transform> _enemyTransforms;
     private GravityPlane _gravityPlane;
 
     private void Start()
     {
-        if(Instance != null && Instance != this) Destroy(this.gameObject);
-        else
-        {
-            Instance = this;
-        }
+        Debug.LogWarning("SETTING INSTANCE OF GAME MANAGER");
+        Instance = this;
         InitializeGame();
     }
 
@@ -29,7 +27,7 @@ public class GameManager : MonoBehaviour
     {
         StageFactory factory = new StageFactory(5, 30, 30, difficultyProfile);
         StageInfo info = factory.create();
-        stageSpawner.SpawnStage(info);
+        player = stageSpawner.SpawnStage(info);
         _gravityPlane = info.GravityPlane;
     }
 
