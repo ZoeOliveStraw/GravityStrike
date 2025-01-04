@@ -43,7 +43,7 @@ public class GravityPlane
     }
 
     // Method to place wells
-    public void PlaceWells(Well[] wells)
+    public void PlaceWells(List<Well> wells)
     {
         Wells.AddRange(wells);
 
