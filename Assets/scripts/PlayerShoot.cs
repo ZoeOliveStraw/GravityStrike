@@ -11,7 +11,6 @@ public class PlayerShoot : MonoBehaviour
     void Update()
     {
         _aimVector = InputManager.AimVector;
-        Debug.LogWarning($"AIM VECTOR: {_aimVector}");
         if(InputManager.Controls.Player.Attack.IsPressed()) Mathf.Clamp(_currentShotForce += Time.deltaTime, 0, minMaxShotForce.y);
         if(InputManager.Controls.Player.Attack.WasReleasedThisFrame()) FireReleased();
     }

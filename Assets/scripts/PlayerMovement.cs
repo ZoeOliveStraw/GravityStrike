@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
         _isMoving = _moveVector.magnitude > 0.1f;
         ProcessMovement();
         RenderParticles();
+        ApplyGravity();
     }
 
     private void ProcessMovement()
@@ -37,7 +38,6 @@ public class PlayerMovement : MonoBehaviour
     private float AngleToStickDirection()
     {
         float result = Vector2.Angle(transform.up, _moveVector);
-        Debug.LogWarning($"MOVEVECTOR: {_moveVector}, FORWARD: {transform.forward} RESULT: {result}");
         return result;
     }
 
@@ -77,5 +77,12 @@ public class PlayerMovement : MonoBehaviour
             emission.rateOverTime = partRate;
         }
         else if(thrusterParticles.isPlaying) thrusterParticles.Stop();
+    }
+
+    private void ApplyGravity()
+    {
+        Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
+        Vector2 gravity = GameManager.Instance.GravityFromPosition(currentPosition);
+        Debug.LogWarning($"GRAVITY: {gravity.magnitude}");
     }
 }   

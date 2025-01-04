@@ -10,14 +10,14 @@ public class StageFactory
     public int Height;
     public int Resolution;
     public Vector2 WellSizeRange;
-    public Vector2 WellCountRange;
+    public Vector2Int WellCountRange;
     public Vector2 EnemyCountRange;
 
     public StageFactory(
         int width, 
         int height, 
         int resolution,
-        Vector2 well_count_range,
+        Vector2Int well_count_range,
         Vector2 well_size_range,
         Vector2 enemy_count_range 
     )
@@ -28,6 +28,16 @@ public class StageFactory
         WellCountRange = well_count_range;
         WellSizeRange = well_size_range;
         EnemyCountRange = enemy_count_range;
+    }
+    
+    public StageFactory(int resolution, int width, int height, SO_DifficultyProfile difficulty)
+    {
+        Width = width;
+        Height = height;
+        Resolution = resolution;
+        WellCountRange = difficulty.starCountRange;
+        WellSizeRange = difficulty.starSizeRange;
+        EnemyCountRange = difficulty.enemyCountRange;
     }
 
     public StageInfo create() {
@@ -48,7 +58,7 @@ public class StageFactory
     }
 
     public List<Well> generateWells() {
-        int well_count = Random.Range(Mathf.FloorToInt(WellCountRange.x), Mathf.CeilToInt(WellCountRange.y));
+        int well_count = Random.Range(WellCountRange.x, WellCountRange.y);
         
         List<Well> wells = new List<Well>();
 
@@ -115,5 +125,5 @@ public class StageFactory
         return wells;
     }
 
-
+    
 }

@@ -72,13 +72,26 @@ public class GravityPlane
     }
 
     // Example method to get the nearest point to an object
-    public Point GetNearestPoint(float x, float y)
+    public Vector2 GetGravityAtPos(float x, float y)
     {
         // Clamp the position to grid boundaries
         int row = Mathf.Clamp(Mathf.RoundToInt(y / Resolution), 0, Rows - 1);
         int col = Mathf.Clamp(Mathf.RoundToInt(x / Resolution), 0, Cols - 1);
 
         // Return the corresponding grid point
-        return Points[row, col];
+        return Points[row, col].Force;
+    }
+
+    public Vector2 GetGravityAtPos(Vector2 pos)
+    {
+        // Clamp the position to grid boundaries
+        int row = Mathf.Clamp(Mathf.RoundToInt(pos.y * Resolution), 0, Rows - 1);
+        int col = Mathf.Clamp(Mathf.RoundToInt(pos.x * Resolution), 0, Cols - 1);
+        
+        Point point = Points[row, col];
+        Debug.LogWarning($"Position given: {pos}, Index Accessed: {row}, {col}");
+        
+        // Return the corresponding grid point
+        return point.Force;
     }
 }

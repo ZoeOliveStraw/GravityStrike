@@ -16,7 +16,7 @@ public class GravityPlaneVisualizer : MonoBehaviour
     public int ySize;
     public int resolution;        // Prefab for the grid points (now a cube)
 
-    public Vector2 well_count_range;
+    public Vector2Int well_count_range;
     public Vector2 well_size_range;
     public Vector2 enemy_count_range;
 
@@ -33,16 +33,6 @@ public class GravityPlaneVisualizer : MonoBehaviour
         )).create();
 
         gravityPlane = stage.GravityPlane;
-
-        // Create points in the scene as cubes and wells as spheres
-        for (int i = 0; i < gravityPlane.Rows; i++)
-        {
-            for (int j = 0; j < gravityPlane.Cols; j++)
-            {
-                // Vector2 position = gravityPlane.Points[i, j].Position;
-                // CreatePoint(position,gravityPlane.Points[i, j]);  // Create cubes for points
-            }
-        }
 
         // Create spheres for wells
         foreach (var well in stage.Wells)
