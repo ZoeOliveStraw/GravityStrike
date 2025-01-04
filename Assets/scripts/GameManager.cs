@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private StageSpawner  stageSpawner;
     [SerializeField] public SO_PhysicsConstants physicsConstants;
     [SerializeField] public Camera sceneCamera;
-    [SerializeField] private SO_DifficultyProfile difficultyProfile;
+    [SerializeField] public SO_DifficultyProfile difficultyProfile;
 
     private List<Well> _wells;
     private List<Transform> _enemyTransforms;
@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour
 
     private void InitializeGame()
     {
-        StageFactory f = new StageFactory(30, 30, 5);
-        stageSpawner.SpawnStage(f.Create());
+        
     }
 }

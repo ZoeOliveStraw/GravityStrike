@@ -19,7 +19,14 @@ public class GravityPlaneVisualizer : MonoBehaviour
     void Start()
     {
 
-        StageInfo stage = (new StageFactory(xSize,ySize,resolution)).Create();
+        StageInfo stage = (new StageFactory(
+            xSize,
+            ySize,
+            resolution,
+            new Vector2(1,3),
+            new Vector2(2,5),
+            new Vector2(2,5)
+        )).create();
 
         gravityPlane = stage.GravityPlane;
 

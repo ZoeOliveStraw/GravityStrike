@@ -5,10 +5,12 @@ public class Well
 {
     public Vector2 Position;
     public float Mass { get; set; }
+    public float Diameter { get; set; }
 
-    public Well(int x, int y, float mass)
+    public Well(float x, float y, float mass)
     {
         Position = new Vector2(x,y);
         Mass = mass;
+        Diameter = GameManager.Instance.physicsConstants.StarSizePerMass * Mass;
     }
 }

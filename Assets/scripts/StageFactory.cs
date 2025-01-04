@@ -3,18 +3,35 @@ using UnityEngine;
 
 public class StageFactory
 {
+    public int Level;
+    public int Difficulty;
+
     public int Width;
     public int Height;
     public int Resolution;
+    public Vector2 WellSizeRange;
+    public Vector2 WellCountRange;
+    public Vector2 EnemyCountRange;
 
-    public StageFactory(int width, int height, int resolution)
+    public StageFactory(
+        int width, 
+        int height, 
+        int resolution,
+        Vector2 well_count_range,
+        Vector2 well_size_range,
+        Vector2 enemy_count_range 
+    )
     {
         Width = width;
         Height = height;
         Resolution = resolution;
+        WellCountRange = well_count_range;
+        WellSizeRange = well_size_range;
+        EnemyCountRange = enemy_count_range;
     }
 
-    public StageInfo Create() {
+    public StageInfo create() {
+
         GravityPlane plane = generateGravityPlane();
         List<Well> wells = generateWells();
         List<Enemy> enemies = generateEnemies();
@@ -31,11 +48,66 @@ public class StageFactory
     }
 
     public List<Well> generateWells() {
-        // determine number of wells and strength
-        return new List<Well> {
-            new Well(2, 3, 10),
-            new Well(6, 7, 20)
-        };
+        int well_count = Random.Range(Mathf.FloorToInt(WellCountRange.x), Mathf.CeilToInt(WellCountRange.y));
+        
+        List<Well> wells = new List<Well>();
+
+        bool has_appropriate_location;
+        Vector2 well_location;
+        Vector2 spawn_point = new Vector2(Width*0.5f,Height*0.5f);
+        float distance;
+        float well_size;
+        float space_between_wells;
+        float space_from_spawn;
+        float space_from_top;
+        float space_from_bottom;
+        float space_from_left;
+        float space_from_right;
+        
+        Well temp_well; 
+
+        for (int i = 0; i < well_count; i++) {
+
+            has_appropriate_location = true;
+
+            well_size = Random.Range(Mathf.FloorToInt(WellSizeRange.x), Mathf.CeilToInt(WellSizeRange.y));
+            well_location = new Vector2(Random.Range(0,Width),Random.Range(0,Height));
+            temp_well = new Well(well_location.x,well_location.y,well_size);
+
+            // calculate distance from each other well to determine if its too close
+            foreach (var well in wells) {
+                distance = Vector2.Distance(well_location, well.Position);
+                space_between_wells = distance - well.Diameter * 0.5f - temp_well.Diameter * 0.5f;
+                if (space_between_wells < GameManager.Instance.difficultyProfile.minDistanceBetweenStarSurfaces) {
+                    has_appropriate_location = false;
+                    break;
+                }
+                space_from_spawn = Vector2.Distance(well_location, spawn_point)-well.Diameter*0.5f;
+                space_from_top = Height - (well_location.y + well.Diameter*0.5f);
+                space_from_bottom = well_location.y - well.Diameter*0.5f;
+                space_from_left = well_location.x - well.Diameter*0.5f;
+                space_from_right = Width - (well_location.x + well.Diameter*0.5f);
+
+                if (
+                    space_from_spawn < 5
+                    || space_from_bottom < 5
+                    || space_from_top < 5
+                    || space_from_left < 5
+                    || space_from_right < 5
+                ) {
+                    has_appropriate_location = false;
+                    break;
+                }
+            }
+
+            if (has_appropriate_location) {
+               wells.Add(temp_well);
+            } else {
+                i--; // try again
+            }
+        }
+
+        return wells;
     }
 
 
