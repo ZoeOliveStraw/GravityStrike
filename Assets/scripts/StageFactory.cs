@@ -64,7 +64,6 @@ public class StageFactory
         float space_from_left;
         float space_from_right;
         
-        Well temp_well; 
 
         for (int i = 0; i < well_count; i++) {
 
@@ -72,12 +71,15 @@ public class StageFactory
 
             well_size = Random.Range(Mathf.FloorToInt(WellSizeRange.x), Mathf.CeilToInt(WellSizeRange.y));
             well_location = new Vector2(Random.Range(0,Width),Random.Range(0,Height));
-            temp_well = new Well(well_location.x,well_location.y,well_size);
+            Well temp_well = new Well(well_location.x,well_location.y,well_size);
 
             // calculate distance from each other well to determine if its too close
             foreach (var well in wells) {
                 distance = Vector2.Distance(well_location, well.Position);
                 space_between_wells = distance - well.Diameter * 0.5f - temp_well.Diameter * 0.5f;
+                Debug.LogWarning($"MANAGER NULL STATE:  {GameManager.Instance == null}");
+                Debug.LogWarning($"PROFILE NULL STATE:  {GameManager.Instance.difficultyProfile == null}");
+                Debug.LogWarning($"DISTANCE NULL STATE: {GameManager.Instance.difficultyProfile.minDistanceBetweenStarSurfaces == null}");
                 if (space_between_wells < GameManager.Instance.difficultyProfile.minDistanceBetweenStarSurfaces) {
                     has_appropriate_location = false;
                     break;

@@ -23,7 +23,7 @@ public class GravityPlaneVisualizer : MonoBehaviour
             xSize,
             ySize,
             resolution,
-            new Vector2(1,3),
+            new Vector2(2,3),
             new Vector2(2,5),
             new Vector2(2,5)
         )).create();
