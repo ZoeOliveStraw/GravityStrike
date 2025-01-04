@@ -58,72 +58,78 @@ public class StageFactory
     }
 
     public List<Well> generateWells() {
-        int well_count = Random.Range(WellCountRange.x, WellCountRange.y);
-        
+        int well_count = Random.Range(Mathf.FloorToInt(WellCountRange.x), Mathf.CeilToInt(WellCountRange.y));
         List<Well> wells = new List<Well>();
 
-        bool has_appropriate_location;
-        Vector2 well_location;
-        Vector2 spawn_point = new Vector2(Width*0.5f,Height*0.5f);
-        float distance;
-        float well_size;
-        float space_between_wells;
-        float space_from_spawn;
-        float space_from_top;
-        float space_from_bottom;
-        float space_from_left;
-        float space_from_right;
-        
+        Vector2 spawn_point = new Vector2(Width * 0.5f, Height * 0.5f);
+        float minDistance = GameManager.Instance.difficultyProfile.minDistanceBetweenStarSurfaces;
 
-        for (int i = 0; i < well_count; i++) {
+        int maxAttempts = 20;
+        int attemptCount = 0;
 
-            has_appropriate_location = true;
+        for (int i = 0; i < well_count; i++)
+        {
+            bool isValidLocation = false;
+            Well temp_well = null;
 
-            well_size = Random.Range(Mathf.FloorToInt(WellSizeRange.x), Mathf.CeilToInt(WellSizeRange.y));
-            well_location = new Vector2(Random.Range(0,Width),Random.Range(0,Height));
-            Well temp_well = new Well(well_location.x,well_location.y,well_size);
+            while (!isValidLocation && attemptCount < maxAttempts)
+            {
+                attemptCount++;
+                float well_size = Random.Range(Mathf.FloorToInt(WellSizeRange.x), Mathf.CeilToInt(WellSizeRange.y));
+                Vector2 well_location = new Vector2(Random.Range(0, Width), Random.Range(0, Height));
+                temp_well = new Well(well_location.x, well_location.y, well_size);
 
-            // calculate distance from each other well to determine if its too close
-            int count = 0;
-            foreach (var well in wells) {
-                distance = Vector2.Distance(well_location, well.Position);
-                space_between_wells = distance - well.Diameter * 0.5f - temp_well.Diameter * 0.5f;
-                if (space_between_wells < GameManager.Instance.difficultyProfile.minDistanceBetweenStarSurfaces) {
-                    has_appropriate_location = false;
-                    break;
+                if (!IsWithinBoundaries(temp_well) || !IsFarEnoughFromSpawn(temp_well, spawn_point) || !IsFarEnoughFromOtherWells(temp_well, wells, minDistance))
+                {
+                    continue;
                 }
-                space_from_spawn = Vector2.Distance(well_location, spawn_point)-well.Diameter*0.5f;
-                space_from_top = Height - (well_location.y + well.Diameter*0.5f);
-                space_from_bottom = well_location.y - well.Diameter*0.5f;
-                space_from_left = well_location.x - well.Diameter*0.5f;
-                space_from_right = Width - (well_location.x + well.Diameter*0.5f);
 
-                if (
-                    space_from_spawn < 5
-                    || space_from_bottom < 5
-                    || space_from_top < 5
-                    || space_from_left < 5
-                    || space_from_right < 5
-                ) {
-                    has_appropriate_location = false;
-                    break;
-                }
+                isValidLocation = true;
             }
 
-            if (has_appropriate_location) {
-               wells.Add(temp_well);
-            } else {
-                i--; // try again
+            if (isValidLocation && temp_well != null)
+            {
+                Debug.LogWarning("placing well");
+                wells.Add(temp_well);
             }
-            count++;
-            if (count > 20) {
-                Debug.LogWarning($"could not do wells");
+            else
+            {
+                Debug.LogWarning("Could not find a valid position for a well after multiple attempts.");
                 break;
             }
         }
 
         return wells;
     }
+
+    private bool IsWithinBoundaries(Well well) {
+        float radius = well.Diameter * 0.5f;
+
+        return well.Position.x - radius >= 0 &&
+               well.Position.x + radius <= Width &&
+               well.Position.y - radius >= 0 &&
+               well.Position.y + radius <= Height;
+    }
+
+    private bool IsFarEnoughFromSpawn(Well well, Vector2 spawnPoint)
+    {
+        float spawnDistance = Vector2.Distance(well.Position, spawnPoint) - (well.Diameter * 0.5f);
+        return spawnDistance >= 5;
+    }
+
+    private bool IsFarEnoughFromOtherWells(Well candidate, List<Well> existingWells, float minDistance)
+    {
+        foreach (var well in existingWells)
+        {
+            float distance = Vector2.Distance(candidate.Position, well.Position) - (candidate.Diameter * 0.5f + well.Diameter * 0.5f);
+            if (distance < minDistance)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     
 }
