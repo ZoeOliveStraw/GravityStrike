@@ -168,8 +168,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageSpawner: {fileID: 758785671}
   physicsConstants: {fileID: 11400000, guid: 8982af1ca5971794ebaa29359e37f473, type: 2}
-  sceneCamera: {fileID: 0}
-  difficultyProfile: {fileID: 0}
+  sceneCamera: {fileID: 1058523342}
+  difficultyProfile: {fileID: 11400000, guid: 724a733c7aee89d44b758ce2edca2729, type: 2}
 --- !u!4 &758785673
 Transform:
   m_ObjectHideFlags: 0
