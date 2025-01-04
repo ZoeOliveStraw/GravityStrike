@@ -18,14 +18,10 @@ public class GravityPlaneVisualizer : MonoBehaviour
 
     void Start()
     {
-        // Initialize the GravityPlane with height, width, and resolution
-        gravityPlane = new GravityPlane(xSize, ySize, resolution); 
 
-        // Initialize wells (for testing purposes, you can adjust well positions and masses)
-        gravityPlane.PlaceWells(new Well[] {
-            new Well(2, 3, 10),
-            new Well(6, 7, 20)
-        });
+        StageInfo stage = (new StageFactory(xSize,ySize,resolution)).create();
+
+        gravityPlane = stage.GravityPlane;
 
         // Create points in the scene as cubes and wells as spheres
         for (int i = 0; i < gravityPlane.Rows; i++)
@@ -38,7 +34,7 @@ public class GravityPlaneVisualizer : MonoBehaviour
         }
 
         // Create spheres for wells
-        foreach (var well in gravityPlane.Wells)
+        foreach (var well in stage.Wells)
         {
             CreateWell(well.Position);  // Create spheres for wells
         }
@@ -111,7 +107,7 @@ public class GravityPlaneVisualizer : MonoBehaviour
         Color pointColor = MapMagnitudeToColor(point.Force.magnitude);
         pointObject.GetComponent<Renderer>().material.color = pointColor;
     }
-    
+
     // Helper method to map MagnitudeMultiplier to a color
     Color MapMagnitudeToColor(float magnitude)
     {
