@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
 
     private void InitializeGame()
     {
-        StageInfo info  = new StageInfo();
-        stageSpawner.SpawnStage(info);
+        
     }
 }

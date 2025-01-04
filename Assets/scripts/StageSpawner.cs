@@ -13,7 +13,7 @@ public class StageSpawner : MonoBehaviour
     public void SpawnStage(StageInfo stageInfo)
     {
         SpawnStars(stageInfo.Wells);
-        SpawnEnemies(stageInfo.EnemyLocations);
+        SpawnEnemies(stageInfo.Enemies);
         SpawnPlayer(stageInfo.LevelWidth, stageInfo.LevelHeight);
     }
 
@@ -27,7 +27,7 @@ public class StageSpawner : MonoBehaviour
         }
     }
 
-    private void SpawnEnemies(List<Vector2> enemies)
+    private void SpawnEnemies(List<Enemy> enemies)
     {
         
     }

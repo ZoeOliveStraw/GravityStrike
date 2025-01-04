@@ -19,7 +19,7 @@ public class GravityPlaneVisualizer : MonoBehaviour
     void Start()
     {
 
-        StageInfo stage = (new StageFactory(xSize,ySize,resolution)).create();
+        StageInfo stage = (new StageFactory(xSize,ySize,resolution)).Create();
 
         gravityPlane = stage.GravityPlane;
 
@@ -99,7 +99,7 @@ public class GravityPlaneVisualizer : MonoBehaviour
         sphere.GetComponent<Renderer>().material.color = wellColor;
         sphere.transform.localScale = new Vector3(sphereRadius, sphereRadius, sphereRadius);  // Set sphere size
     }
-    // Method to create a point as a 3D rectangle with dynamic color
+    // Method to Create a point as a 3D rectangle with dynamic color
     void CreatePoint(Vector2 position, Point point)
     {
         GameObject pointObject = Instantiate(cubePrefab, new Vector3(position.x, 0, position.y), Quaternion.identity);

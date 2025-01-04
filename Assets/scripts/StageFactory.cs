@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class StageFactory
 {
-    public int Level;
-    public int Difficulty;
-
     public int Width;
     public int Height;
     public int Resolution;
@@ -17,7 +14,7 @@ public class StageFactory
         Resolution = resolution;
     }
 
-    public StageInfo create() {
+    public StageInfo Create() {
 
         GravityPlane plane = generateGravityPlane();
         List<Well> wells = generateWells();
