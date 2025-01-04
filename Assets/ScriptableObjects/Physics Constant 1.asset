@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f223bdc9cc2a4814cb1257ba47e8979e, type: 3}
   m_Name: Physics Constant 1
   m_EditorClassIdentifier: 
-  GravityStrength: 5
+  GravityStrength: 70
   GravityRangePerMass: 3
-  StarSizePerMass: 0.4
+  StarSizePerMass: 1

@@ -13,7 +13,7 @@ public class GravityPlane
     public int Rows { get; private set; }
     public int Cols { get; private set; }
     public float Resolution { get; private set; }
-    public float GravitationalConstant = 1;
+    public float GravitationalConstant = GameManager.Instance.physicsConstants.GravityStrength;
 
     // Constructor
     public GravityPlane(int height, int width, int res)
@@ -34,7 +34,10 @@ public class GravityPlane
         {
             for (int j = 0; j < Cols; j++)
             {
-                Points[i, j] = new Point((float) width * ((float) j / (float) Cols), (float) height * ((float) i / (float) Rows));
+                Points[i, j] = new Point(
+                    (float) width * ((float) j / (float) Cols), 
+                    (float) height * ((float) i / (float) Rows)
+                );
             }
         }
 

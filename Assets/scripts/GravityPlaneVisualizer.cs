@@ -3,8 +3,8 @@ using UnityEngine;
 public class GravityPlaneVisualizer : MonoBehaviour
 {
     public GravityPlane gravityPlane;  // Reference to the GravityPlane
-    public float pointWidth = 0.1f;    // Width of the rectangle
-    public float pointHeight = 0.1f;   // Height of the rectangle
+    public float pointWidth = 0.5f;    // Width of the rectangle
+    public float pointHeight = 0.5f;   // Height of the rectangle
     public float sphereRadius = 0.3f;  // Radius of the sphere representing wells
     public Color gridColor = Color.green;  // Color for the grid points
     public Color wellColor = Color.red;   // Color for the wells
@@ -16,6 +16,10 @@ public class GravityPlaneVisualizer : MonoBehaviour
     public int ySize;
     public int resolution;        // Prefab for the grid points (now a cube)
 
+    public Vector2 well_count_range;
+    public Vector2 well_size_range;
+    public Vector2 enemy_count_range;
+
     void Start()
     {
 
@@ -23,9 +27,9 @@ public class GravityPlaneVisualizer : MonoBehaviour
             xSize,
             ySize,
             resolution,
-            new Vector2(2,3),
-            new Vector2(2,5),
-            new Vector2(2,5)
+            well_count_range,
+            well_size_range,
+            enemy_count_range
         )).create();
 
         gravityPlane = stage.GravityPlane;
@@ -35,15 +39,15 @@ public class GravityPlaneVisualizer : MonoBehaviour
         {
             for (int j = 0; j < gravityPlane.Cols; j++)
             {
-                Vector2 position = gravityPlane.Points[i, j].Position;
-                CreatePoint(position,gravityPlane.Points[i, j]);  // Create cubes for points
+                // Vector2 position = gravityPlane.Points[i, j].Position;
+                // CreatePoint(position,gravityPlane.Points[i, j]);  // Create cubes for points
             }
         }
 
         // Create spheres for wells
         foreach (var well in stage.Wells)
         {
-            CreateWell(well.Position);  // Create spheres for wells
+            CreateWell(well.Position,well.Diameter*0.5f);  // Create spheres for wells
         }
     }
 
@@ -57,9 +61,8 @@ public class GravityPlaneVisualizer : MonoBehaviour
         {
             for (int j = 0; j < gravityPlane.Cols; j++)
             {
-                Vector2 position = gravityPlane.Points[i, j].Position;
                 // Draw the 4 edges of the rectangle using Debug.DrawLine
-                DrawRectangle(position, pointWidth, pointHeight);
+                DrawRectangle(gravityPlane.Points[i, j], pointWidth, pointHeight);
             }
         }
 
@@ -67,24 +70,26 @@ public class GravityPlaneVisualizer : MonoBehaviour
         foreach (var well in gravityPlane.Wells)
         {
             // You could visualize this as a circle or small sphere in the Scene view
-            DrawSphere(well.Position, sphereRadius);
+            DrawSphere(well.Position, well.Diameter * 0.5f);
         }
     }
 
     // Method to draw a rectangle using Debug.DrawLine
-    void DrawRectangle(Vector2 center, float width, float height)
+    void DrawRectangle(Point point, float width, float height)
     {
         // Calculate the 4 corners of the rectangle
-        Vector3 topLeft = new Vector3(center.x - width / 2, 0, center.y + height / 2);
-        Vector3 topRight = new Vector3(center.x + width / 2, 0, center.y + height / 2);
-        Vector3 bottomLeft = new Vector3(center.x - width / 2, 0, center.y - height / 2);
-        Vector3 bottomRight = new Vector3(center.x + width / 2, 0, center.y - height / 2);
+        Vector3 topLeft = new Vector3(point.Position.x - width / 2, 0, point.Position.y + height / 2);
+        Vector3 topRight = new Vector3(point.Position.x + width / 2, 0, point.Position.y + height / 2);
+        Vector3 bottomLeft = new Vector3(point.Position.x - width / 2, 0, point.Position.y - height / 2);
+        Vector3 bottomRight = new Vector3(point.Position.x + width / 2, 0, point.Position.y - height / 2);
+
+        Color pointColor = MapMagnitudeToColor(point.Force.magnitude);
 
         // Draw lines between the corners to form a rectangle
-        Debug.DrawLine(topLeft, topRight, gridColor);
-        Debug.DrawLine(topRight, bottomRight, gridColor);
-        Debug.DrawLine(bottomRight, bottomLeft, gridColor);
-        Debug.DrawLine(bottomLeft, topLeft, gridColor);
+        Debug.DrawLine(topLeft, topRight, pointColor);
+        Debug.DrawLine(topRight, bottomRight, pointColor);
+        Debug.DrawLine(bottomRight, bottomLeft, pointColor);
+        Debug.DrawLine(bottomLeft, topLeft, pointColor);
     }
 
     // Method to draw a sphere using Debug.DrawRay (visualizing as a point or circle)
@@ -97,14 +102,14 @@ public class GravityPlaneVisualizer : MonoBehaviour
     }
 
     // Method to instantiate a sphere for wells in the Game view
-    void CreateWell(Vector2 position)
+    void CreateWell(Vector2 position,float radius)
     {
         // Create a new sphere (well) at the specified position
         GameObject sphere = Instantiate(spherePrefab, new Vector3(position.x, 0, position.y), Quaternion.identity);
         
         // Optionally change the color of the sphere (well)
         sphere.GetComponent<Renderer>().material.color = wellColor;
-        sphere.transform.localScale = new Vector3(sphereRadius, sphereRadius, sphereRadius);  // Set sphere size
+        sphere.transform.localScale = new Vector3(radius, radius, radius);  // Set sphere size
     }
     // Method to Create a point as a 3D rectangle with dynamic color
     void CreatePoint(Vector2 position, Point point)
