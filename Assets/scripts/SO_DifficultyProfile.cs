@@ -6,6 +6,7 @@ public class SO_DifficultyProfile : ScriptableObject
     [SerializeField] private Vector2Int starCountRange;
     [SerializeField] private Vector2 starSizeRange;
     [SerializeField] private Vector2Int enemyCountRange;
+    [SerializeField] private float minDistanceBetweenStarSurfaces;
 
     public int GetStarCount()
     {
