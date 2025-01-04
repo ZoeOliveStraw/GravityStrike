@@ -60,7 +60,7 @@ public class MainMenu : MonoBehaviour
 
     private void SetGameModeByIndex()
     {
-        if (currentGameModeIndex < 0 || currentGameModeIndex >= gameModes.Count - 1) return;
+        if (currentGameModeIndex < 0 || currentGameModeIndex >= gameModes.Count) return;
         currentGameMode = gameModes[currentGameModeIndex];
         txtDifficulty.text = gameModes[currentGameModeIndex]._difficultyProfile.difficultyName;
     }
