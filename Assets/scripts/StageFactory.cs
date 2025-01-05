@@ -44,7 +44,7 @@ public class StageFactory
 
         GravityPlane plane = generateGravityPlane();
         List<Well> wells = generateWells();
-        List<Enemy> enemies = generateEnemies();
+        List<Enemy> enemies = generateEnemies(wells);
         plane.PlaceWells(wells);
         return new StageInfo(Width,Height,wells,enemies,plane);
     }
@@ -53,8 +53,45 @@ public class StageFactory
         return new GravityPlane(Width, Height, Resolution); 
     }
 
-    public List<Enemy> generateEnemies() {
-        return new List<Enemy> {};
+    public List<Enemy> generateEnemies(List<Well> wells) {
+        int enemy_count = Random.Range(Mathf.FloorToInt(EnemyCountRange.x), Mathf.CeilToInt(EnemyCountRange.y));
+        List<Enemy> enemies = new List<Enemy>();
+
+        Vector2 spawn_point = new Vector2(Width * 0.5f, Height * 0.5f);
+
+        int maxAttempts = 20;
+        int attemptCount = 0;
+
+        for (int i = 0; i < enemy_count; i++)
+        {
+            bool isValidLocation = false;
+            Enemy temp_enemy = null;
+
+            while (!isValidLocation && attemptCount < maxAttempts)
+            {
+                attemptCount++;
+                Vector2 enemy_location = new Vector2(Random.Range(0, Width), Random.Range(0, Height));
+                temp_enemy = new Enemy((int) enemy_location.x, (int) enemy_location.y);
+
+                if (!IsFarEnoughFromSpawn(temp_enemy, spawn_point) || !IsFarEnoughFromOtherWells(temp_enemy, wells, 0))
+                {
+                    continue;
+                }
+
+                isValidLocation = true;
+            }
+
+            if (isValidLocation && temp_enemy != null)
+            {
+                enemies.Add(temp_enemy);
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        return enemies;
     }
 
     public List<Well> generateWells() {
@@ -109,13 +146,32 @@ public class StageFactory
                well.Position.y + radius <= Height;
     }
 
-    private bool IsFarEnoughFromSpawn(Well well, Vector2 spawnPoint)
+    private bool IsFarEnoughFromSpawn(Well item, Vector2 spawnPoint)
     {
-        float spawnDistance = Vector2.Distance(well.Position, spawnPoint) - (well.Diameter * 0.5f);
+        float spawnDistance = Vector2.Distance(item.Position, spawnPoint) - (item.Diameter * 0.5f);
+        return spawnDistance >= 5; 
+    }
+
+    private bool IsFarEnoughFromSpawn(Enemy item, Vector2 spawnPoint)
+    {
+        float spawnDistance = Vector2.Distance(item.Position, spawnPoint) - (item.Diameter * 0.5f);
         return spawnDistance >= 5;
     }
 
     private bool IsFarEnoughFromOtherWells(Well candidate, List<Well> existingWells, float minDistance)
+    {
+        foreach (var well in existingWells)
+        {
+            float distance = Vector2.Distance(candidate.Position, well.Position) - (candidate.Diameter * 0.5f + well.Diameter * 0.5f);
+            if (distance < minDistance)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private bool IsFarEnoughFromOtherWells(Enemy candidate, List<Well> existingWells, float minDistance)
     {
         foreach (var well in existingWells)
         {

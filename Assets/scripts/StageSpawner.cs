@@ -5,7 +5,7 @@ public class StageSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject starPrefab;
-    [SerializeField] private GameObject enemy;
+    [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private GameObject gridIntersectionPrefab;
     [SerializeField] private GameObject gridPointPrefab;
 
@@ -64,7 +64,9 @@ public class StageSpawner : MonoBehaviour
 
     private void SpawnEnemies(List<Enemy> enemies)
     {
-        
+        foreach(Enemy enemy in enemies) {
+            Instantiate(enemyPrefab, enemy.Position, Quaternion.identity, enemyParent);
+        }
     }
 
     private GameObject SpawnPlayer(int x, int y)

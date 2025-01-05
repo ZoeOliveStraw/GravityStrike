@@ -1197,7 +1197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 8542031651893090306, guid: 8eec3bf519359574ea21bc035d493c9d, type: 3}
   starPrefab: {fileID: 5266988039611660251, guid: d0fb510daee4a434a9119810a4575f72, type: 3}
-  enemy: {fileID: 0}
+  enemyPrefab: {fileID: 0}
   gridIntersectionPrefab: {fileID: 4924434174036578701, guid: 890d91920c8f4df41bfeb492869b0cec, type: 3}
   gridPointPrefab: {fileID: 3244049458563420796, guid: 8891861bbb542ba48ad7eacde5bace2c, type: 3}
   GravityColor0: {r: 0.06762733, g: 0.053800277, b: 0.3679245, a: 1}

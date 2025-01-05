@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.LogWarning("SETTING INSTANCE OF GAME MANAGER");
         Instance = this;
-        InitializeGame();
+        InitializeGame(); 
     }
 
     private void InitializeGame()

@@ -4,11 +4,10 @@ using System.Collections.Generic;
 public class Enemy
 {
     public Vector2 Position;
-    public int AttackMultiplier;
+    public int Diameter = 10;
 
-    public Enemy(int x, int y, int attack_multiplier)
+    public Enemy(int x, int y)
     {
         Position = new Vector2(x,y);
-        AttackMultiplier = attack_multiplier;
     }
 }
