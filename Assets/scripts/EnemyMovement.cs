@@ -18,6 +18,9 @@ public class EnemyMovement : MonoBehaviour
     
     private Vector2 _moveVector;
     private bool _isMoving;
+
+    public int gravity_threshold_1 = 20; // amount of gravity that will cause enemy to move perpendicular to reach player
+    public int gravity_threshold_2 = 40; // amount of gravity that will cause enemy to flee gravity completely
     
     void Update()
     {
@@ -30,16 +33,36 @@ public class EnemyMovement : MonoBehaviour
 
     public Vector2 CalculateMovement() {
 
-        float threshold = 2;
         Vector2 position = new Vector2(transform.position.x, transform.position.y);
         // if in a gravity hotspot, move away
         Vector2 current_gravity = GameManager.Instance.GravityFromPosition(position);
-        if (current_gravity.magnitude > threshold) {
-            return new Vector2(0,0); // temporary
-            return - current_gravity;
-        } else { 
-            // find path to player
-            return new Vector2(0,0);
+        Vector2 player_position = GameManager.Instance.player.transform.position;
+        Vector2 player_direction = (player_position - position).normalized;
+        Vector2 gravity_direction = current_gravity.normalized;
+
+        if (current_gravity.magnitude > gravity_threshold_2) {
+            return - current_gravity.normalized * maxVelocity;
+        } else if (current_gravity.magnitude > gravity_threshold_1) { 
+            // Check if the angle between the vectors is less than 90 degrees
+            float dotProduct = Vector2.Dot(player_direction, gravity_direction);
+
+            if (dotProduct > 0) 
+            {
+                Vector2 perpendicular1 = new Vector2(-gravity_direction.y, gravity_direction.x); // +90 degrees
+                Vector2 perpendicular2 = new Vector2(gravity_direction.y, -gravity_direction.x); // -90 degrees
+
+                // Determine which perpendicular vector is closer to the player's direction
+                float dot1 = Vector2.Dot(player_direction, perpendicular1);
+                float dot2 = Vector2.Dot(player_direction, perpendicular2);
+
+                Vector2 closerPerpendicular = dot1 > dot2 ? perpendicular1 : perpendicular2;
+
+                return closerPerpendicular.normalized * maxVelocity * 0.5f;
+            } else {
+                return - current_gravity.normalized * maxVelocity;
+            }
+        } else {
+            return player_direction * maxVelocity * 0.5f;
         }
     }
 

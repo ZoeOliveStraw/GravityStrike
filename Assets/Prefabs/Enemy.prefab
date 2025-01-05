@@ -4882,14 +4882,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidBody2D: {fileID: 860513616829947308}
-  thrusterStrength: 10
+  thrusterStrength: 2
   angleToThruster: 75
   rotationSpeed: 10
-  maxVelocity: 50
-  gravityScale: 1
+  maxVelocity: 0.4
+  gravityScale: 0.01
   thrusterParticles: {fileID: 1458815644690473800}
-  minMaxParticleRate: {x: 0, y: 0}
-  minMaxParticleLifetime: {x: 0, y: 0}
+  minMaxParticleRate: {x: 10, y: 20}
+  minMaxParticleLifetime: {x: 0.1, y: 0.2}
+  gravity_threshold_1: 20
+  gravity_threshold_2: 40
 --- !u!212 &1368766743865504215
 SpriteRenderer:
   m_ObjectHideFlags: 0

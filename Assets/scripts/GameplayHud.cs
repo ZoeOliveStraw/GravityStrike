@@ -42,7 +42,7 @@ public class GameplayHud : MonoBehaviour
     private void InitializeHealthSlider()
     {
         playerHurtbox = playerPrefab.GetComponent<PlayerHurtbox>();
-        healthSlider.maxValue = playerHurtbox.maxHealth;
+        // healthSlider.maxValue = playerHurtbox.maxHealth;
     }
     
     private void InitializeShieldSlider()
@@ -60,8 +60,8 @@ public class GameplayHud : MonoBehaviour
 
         if (playerHurtbox != null)
         {
-            healthSlider.value = playerHurtbox.currentHealth;
-            shieldSlider.value = playerHurtbox.currentShields;
+            // healthSlider.value = playerHurtbox.currentHealth;
+            // shieldSlider.value = playerHurtbox.currentShields;
         }
     }
 }
