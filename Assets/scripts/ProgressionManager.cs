@@ -8,6 +8,7 @@ public class ProgressionManager : MonoBehaviour
     public SO_PhysicsConstants physicsProfile;
 
     private int _stage = 0;
+    private int _livesRemaining;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

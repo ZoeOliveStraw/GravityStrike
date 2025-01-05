@@ -4955,11 +4955,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71eb376399865b94b8eff1371143cdb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxShields: 0
-  maxHealth: 0
+  maxShields: 100
+  maxHealth: 100
   maxLives: 3
-  shieldRegenRate: 0
-  explosion: {fileID: 1043881608924115468, guid: f3196af5253de4e438c1260454b90307, type: 3}
+  shieldRegenRate: 1
+  explosionParticles: {fileID: 1043881608924115468, guid: f3196af5253de4e438c1260454b90307, type: 3}
   currentHealth: 0
   currentShields: 0
   currentLives: 0

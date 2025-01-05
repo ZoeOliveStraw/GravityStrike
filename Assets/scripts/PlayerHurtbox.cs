@@ -49,11 +49,12 @@ public class PlayerHurtbox : MonoBehaviour
             GameManager.Instance.player.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
             GameManager.Instance.currentLives--; 
             currentLives--;
-            GameManager.Instance.HUD.setLives(currentLives);
+            GameManager.Instance.hud.setLives(currentLives);
 
             currentHealth = maxHealth;
             currentShields = maxShields;
-        } else {
+        } else 
+        {
             // else trigger game over
         }
 

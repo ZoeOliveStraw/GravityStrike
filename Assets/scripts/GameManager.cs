@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,9 +18,10 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private StageSpawner  stageSpawner;
     [SerializeField] public SO_PhysicsConstants physicsConstants;
-    [SerializeField] public Camera sceneCamera;
     [SerializeField] public SO_DifficultyProfile difficultyProfile;
-    [SerializeField] public GameplayHud HUD;
+    [SerializeField] public Camera sceneCamera;
+    [SerializeField] public GameplayHud hud;
+    [SerializeField] public LoadingShade loadingShade;
 
     public GameObject player;
     private List<Well> _wells;
@@ -36,8 +39,21 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (ProgressionManager.Instance != null)
+        {
+            physicsConstants = ProgressionManager.Instance.physicsProfile;
+            difficultyProfile = ProgressionManager.Instance.difficultyProfile;
+        }
         Instance = this;
-        InitializeGame(); 
+        StartCoroutine(StartGameCoroutine());
+    }
+
+    private IEnumerator StartGameCoroutine()
+    {
+        loadingShade.FadeOut(1);
+        yield return new WaitForSeconds(0.5f);
+        InitializeGame();
+        yield return new WaitForSeconds(0.5f);
     }
 
     private void InitializeGame()
@@ -46,13 +62,11 @@ public class GameManager : MonoBehaviour
         info = factory.create();
         player = stageSpawner.SpawnStage(info);
         _gravityPlane = info.GravityPlane;
-
     }
 
     public Vector2 GravityFromPosition(Vector2 position)
     {
         if (_gravityPlane == null) return Vector2.zero;
-
         return _gravityPlane.GetGravityAtPos(position);
     }
 
@@ -78,5 +92,10 @@ public class GameManager : MonoBehaviour
                 audioSource.PlayOneShot(missileThruster);
                 break;
         }
+    }
+
+    public void ZeroEnemiesRemaining()
+    {
+        
     }
 }

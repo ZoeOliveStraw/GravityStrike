@@ -14,7 +14,7 @@ public class EnemyHurtBox : MonoBehaviour
     public void death() 
     {
         Instantiate(explosion, transform.position, Quaternion.identity);
-        GameManager.Instance.HUD.DecrementEnemyCount();
+        GameManager.Instance.hud.DecrementEnemyCount();
         Destroy(this.GameObject());
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -20,20 +21,31 @@ public class MainMenu : MonoBehaviour
 
     private int currentGameModeIndex = 0;
     private DiffPhysPairing currentGameMode;
+    [SerializeField] private LoadingShade loadingShade;
 
     private void Awake()
     {
         _controls = new InputSystem_Actions();
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
+        while(ProgressionManager.Instance == null) yield return null;
         _controls.Player.Previous.performed += context => SetGameMode(-1);
         _controls.Player.Next.performed += context => SetGameMode(1);
+        currentGameModeIndex = 1;
+        SetGameModeByIndex();
     }
 
     public void StartGame()
     {
+        StartCoroutine(StartGameCoroutine(1));
+    }
+
+    private IEnumerator StartGameCoroutine(float seconds)
+    {
+        loadingShade.FadeIn(seconds);
+        yield return new WaitForSeconds(seconds);
         SceneManager.LoadScene("Gameplay");
     }
 
@@ -63,6 +75,8 @@ public class MainMenu : MonoBehaviour
         if (currentGameModeIndex < 0 || currentGameModeIndex >= gameModes.Count) return;
         currentGameMode = gameModes[currentGameModeIndex];
         txtDifficulty.text = gameModes[currentGameModeIndex]._difficultyProfile.difficultyName;
+        ProgressionManager.Instance.difficultyProfile = currentGameMode._difficultyProfile;
+        ProgressionManager.Instance.physicsProfile = currentGameMode._physicsConstants;
     }
 
     private void OnEnable()

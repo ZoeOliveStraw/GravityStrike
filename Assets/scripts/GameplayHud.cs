@@ -81,7 +81,8 @@ public class GameplayHud : MonoBehaviour
         RenderEnemyCount(currentEnemyCount);
     }
     
-    public void setLives(int lives) {
+    public void setLives(int lives) 
+    {
         txtLivesCount.text = $"Lives: {lives}";
     }
 }
