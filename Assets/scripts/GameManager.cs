@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public enum SoundEffects
+    {
+        MissileFire,
+        MissileExplode,
+        ShipThruster,
+        MissileThruster
+    }
+    
     public static GameManager Instance;
     
     [SerializeField] private StageSpawner  stageSpawner;
@@ -15,6 +23,13 @@ public class GameManager : MonoBehaviour
     private List<Well> _wells;
     private List<Transform> _enemyTransforms;
     private GravityPlane _gravityPlane;
+    
+    [Header("Sound Effects")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip missileFire;
+    [SerializeField] private AudioClip missileExplode;
+    [SerializeField] private AudioClip shipThruster;
+    [SerializeField] private AudioClip missileThruster;
 
     private void Start()
     {
@@ -36,5 +51,24 @@ public class GameManager : MonoBehaviour
         if (_gravityPlane == null) return Vector2.zero;
 
         return _gravityPlane.GetGravityAtPos(position);
+    }
+
+    public void PlaySoundEffect(SoundEffects soundEffect)
+    {
+        switch (soundEffect)
+        {
+            case SoundEffects.MissileFire:
+                audioSource.PlayOneShot(missileFire);
+                break;
+            case SoundEffects.MissileExplode:
+                audioSource.PlayOneShot(missileExplode);
+                break;
+            case SoundEffects.ShipThruster:
+                audioSource.PlayOneShot(shipThruster);
+                break;
+            case SoundEffects.MissileThruster:
+                audioSource.PlayOneShot(missileThruster);
+                break;
+        }
     }
 }

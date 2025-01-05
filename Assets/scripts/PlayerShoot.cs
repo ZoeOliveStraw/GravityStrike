@@ -49,9 +49,10 @@ public class PlayerShoot : MonoBehaviour
         if (currentShotForce > minMaxShotForce.x)
         {
             float shotForce = currentShotForce;
-            Vector2 launchPosition = (Vector2) transform.position + _aimVector * 0.5f;
+            Vector2 launchPosition = (Vector2) transform.position + _aimVector.normalized;
             Missile missile = Instantiate(missilePrefab, launchPosition, Quaternion.identity).GetComponent<Missile>();
             missile.FireZeMissile(shotForce * _aimVector);
+            GameManager.Instance.PlaySoundEffect(GameManager.SoundEffects.MissileFire);
         }
     }
 }

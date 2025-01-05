@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1074191851480366671}
   gravityScale: 0.6
+  explosionEffect: {fileID: 1043881608924115468, guid: f3196af5253de4e438c1260454b90307, type: 3}
 --- !u!212 &743841394002923895
 SpriteRenderer:
   m_ObjectHideFlags: 0
