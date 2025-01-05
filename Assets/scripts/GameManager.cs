@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public SO_PhysicsConstants physicsConstants;
     [SerializeField] public Camera sceneCamera;
     [SerializeField] public SO_DifficultyProfile difficultyProfile;
+    [SerializeField] public GameplayHud HUD;
 
     public GameObject player;
     private List<Well> _wells;
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
         StageInfo info = factory.create();
         player = stageSpawner.SpawnStage(info);
         _gravityPlane = info.GravityPlane;
+
     }
 
     public Vector2 GravityFromPosition(Vector2 position)

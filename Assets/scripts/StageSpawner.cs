@@ -20,6 +20,7 @@ public class StageSpawner : MonoBehaviour
         SpawnGrid(stageInfo.GravityPlane);
         SpawnStars(stageInfo.Wells);
         SpawnEnemies(stageInfo.Enemies);
+        GameManager.Instance.HUD.txtEnemyCount.text = $"Enemies: {stageInfo.Enemies.Count}";
         return SpawnPlayer(stageInfo.LevelWidth, stageInfo.LevelHeight);
     }
     

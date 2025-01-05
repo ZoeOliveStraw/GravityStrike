@@ -1,12 +1,14 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameplayHud : MonoBehaviour
 {
     [SerializeField] private Slider powerSlider;
     [SerializeField] private Slider shieldSlider;
     [SerializeField] private Slider healthSlider;
+    [SerializeField] public TextMeshProUGUI txtEnemyCount;
     private GameObject playerPrefab;
     private PlayerShoot playerShoot;
     private PlayerHurtbox playerHurtbox;

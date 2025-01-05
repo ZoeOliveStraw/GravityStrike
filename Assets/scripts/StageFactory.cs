@@ -87,6 +87,7 @@ public class StageFactory
             }
             else
             {
+                i--;
                 break;
             }
         }
