@@ -58,7 +58,7 @@ public class StageSpawner : MonoBehaviour
     
     private Color MapMagnitudeToColor(float magnitude)
     {
-        float normalizedMagnitude = Mathf.Clamp01(magnitude / 50f);
+        float normalizedMagnitude = Mathf.Clamp01(magnitude / 20f);
         return Color.Lerp(GravityColor0, GravityColor1, normalizedMagnitude);
     }
 
