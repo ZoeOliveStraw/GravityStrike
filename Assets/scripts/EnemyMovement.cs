@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [Header("Movement stats")]
+    [Header("Movement stats")] 
     [SerializeField] private Rigidbody2D _rigidBody2D;
     [SerializeField] private float thrusterStrength;
     [SerializeField] private float angleToThruster;
