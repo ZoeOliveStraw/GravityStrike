@@ -2252,8 +2252,8 @@ MonoBehaviour:
   enemyPrefab: {fileID: 8542031651893090306, guid: b897eaf4de006499299ffe71cf3bf3c7, type: 3}
   gridIntersectionPrefab: {fileID: 4924434174036578701, guid: 890d91920c8f4df41bfeb492869b0cec, type: 3}
   gridPointPrefab: {fileID: 3244049458563420796, guid: 8891861bbb542ba48ad7eacde5bace2c, type: 3}
-  GravityColor0: {r: 0.06762733, g: 0.053800277, b: 0.3679245, a: 1}
-  GravityColor1: {r: 1, g: 1, b: 1, a: 1}
+  GravityColor0: {r: 1, g: 1, b: 1, a: 0.34901962}
+  GravityColor1: {r: 1, g: 0.84705883, b: 0, a: 1}
   starParent: {fileID: 1216651423}
   enemyParent: {fileID: 2102389471}
   gridPointParent: {fileID: 1567539069}
@@ -2376,8 +2376,8 @@ SceneRoots:
   - {fileID: 2108560860}
   - {fileID: 1487417326}
   - {fileID: 1216651423}
-  - {fileID: 1285038703}
   - {fileID: 1567539069}
+  - {fileID: 1285038703}
   - {fileID: 1686532065}
   - {fileID: 1898952003}
   - {fileID: 2102389471}
