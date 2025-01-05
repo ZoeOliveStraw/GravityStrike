@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.LogWarning("SETTING INSTANCE OF GAME MANAGER");
         Instance = this;
         InitializeGame(); 
     }
