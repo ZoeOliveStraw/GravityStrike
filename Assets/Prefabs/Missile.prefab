@@ -50,6 +50,8 @@ MonoBehaviour:
   rb: {fileID: 1074191851480366671}
   gravityScale: 0.6
   explosionEffect: {fileID: 1043881608924115468, guid: f3196af5253de4e438c1260454b90307, type: 3}
+  homingForce: 0
+  homingRange: 0
 --- !u!212 &743841394002923895
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -95,7 +97,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -39787307503582467, guid: b0f202b31d98ec04080baff71595f676, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.12941177, b: 0.54901963, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
