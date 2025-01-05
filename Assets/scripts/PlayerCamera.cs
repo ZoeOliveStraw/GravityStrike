@@ -67,7 +67,14 @@ public class PlayerCamera : MonoBehaviour
 
     private void UpdateCamShake()
     {
-        if(remainingCameraShakeTime > 0) remainingCameraShakeTime = 
-            Mathf.Clamp(remainingCameraShakeTime -= Time.deltaTime, 0, 100);
+        if(remainingCameraShakeTime > 0) 
+        {
+            remainingCameraShakeTime = Mathf.Clamp(remainingCameraShakeTime -= Time.deltaTime, 0, 100);
+            cameraShaking = true;
+        }
+        else
+        {
+            cameraShaking = false;
+        }
     }
 }
