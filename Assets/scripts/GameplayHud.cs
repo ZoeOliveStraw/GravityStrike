@@ -16,6 +16,7 @@ public class GameplayHud : MonoBehaviour
     private float maxShotForce;
     private float maxHealth;
     private float maxShield;
+    private int currentEnemyCount;
     
     private IEnumerator Start()
     {
@@ -65,5 +66,17 @@ public class GameplayHud : MonoBehaviour
             // healthSlider.value = playerHurtbox.currentHealth;
             // shieldSlider.value = playerHurtbox.currentShields;
         }
+    }
+
+    public void RenderEnemyCount(int num)
+    {
+        currentEnemyCount = num;
+        txtEnemyCount.text = $"Enemies: {currentEnemyCount}";
+    }
+
+    public void DecrementEnemyCount()
+    {
+        currentEnemyCount--;
+        RenderEnemyCount(currentEnemyCount);
     }
 }
