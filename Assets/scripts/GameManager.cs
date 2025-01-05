@@ -53,6 +53,11 @@ public class GameManager : MonoBehaviour
         return _gravityPlane.GetGravityAtPos(position);
     }
 
+    public void ShakeCamera(float duration, float intensity)
+    {
+        player.GetComponent<PlayerCamera>().ShakeCamera(duration, intensity);
+    }
+
     public void PlaySoundEffect(SoundEffects soundEffect)
     {
         switch (soundEffect)

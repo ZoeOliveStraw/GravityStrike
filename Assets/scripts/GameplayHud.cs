@@ -5,10 +5,15 @@ using UnityEngine.UI;
 public class GameplayHud : MonoBehaviour
 {
     [SerializeField] private Slider powerSlider;
+    [SerializeField] private Slider shieldSlider;
+    [SerializeField] private Slider healthSlider;
     private GameObject playerPrefab;
     private PlayerShoot playerShoot;
+    private PlayerHurtbox playerHurtbox;
 
     private float maxShotForce;
+    private float maxHealth;
+    private float maxShield;
     
     private IEnumerator Start()
     {
@@ -23,6 +28,8 @@ public class GameplayHud : MonoBehaviour
         }
         playerPrefab = GameManager.Instance.player;
         InitializeShotSlider();
+        InitializeHealthSlider();
+        InitializeShieldSlider();
     }
 
     private void InitializeShotSlider()
@@ -31,6 +38,17 @@ public class GameplayHud : MonoBehaviour
         maxShotForce = playerShoot.minMaxShotForce.y;
         powerSlider.maxValue = maxShotForce;
     }
+    
+    private void InitializeHealthSlider()
+    {
+        playerHurtbox = playerPrefab.GetComponent<PlayerHurtbox>();
+        healthSlider.maxValue = playerHurtbox.maxHealth;
+    }
+    
+    private void InitializeShieldSlider()
+    {
+        shieldSlider.maxValue = playerHurtbox.maxShields;
+    }
 
     
     void Update()
@@ -38,6 +56,12 @@ public class GameplayHud : MonoBehaviour
         if (playerShoot != null)
         {
             powerSlider.value = playerShoot.currentShotForce;
+        }
+
+        if (playerHurtbox != null)
+        {
+            healthSlider.value = playerHurtbox.currentHealth;
+            shieldSlider.value = playerHurtbox.currentShields;
         }
     }
 }

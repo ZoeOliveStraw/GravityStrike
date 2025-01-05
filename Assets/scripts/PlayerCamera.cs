@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float camLerpSpeed;
     [SerializeField] private float moveVectorOffset;
     [SerializeField] private Rigidbody2D rb;
+
+    private float remainingCameraShakeTime;
+    private float currentCameraShakeIntensity;
+    private bool cameraShaking;
 
     private void Start()
     {
@@ -21,6 +26,7 @@ public class PlayerCamera : MonoBehaviour
         if(cam == null) GetCameraReference();
         CalculateCamTarget();
         LerpCamTowardsTarget();
+        UpdateCamShake();
     }
 
     private void GetCameraReference()
@@ -40,6 +46,28 @@ public class PlayerCamera : MonoBehaviour
 
     private void LerpCamTowardsTarget()
     {
-        cam.transform.position = Vector3.Lerp(cam.transform.position, camTarget.position, camLerpSpeed * Time.deltaTime);
+        if (!cameraShaking)
+        {
+            cam.transform.position = Vector3.Lerp(cam.transform.position, camTarget.position, camLerpSpeed * Time.deltaTime);
+        }
+        else
+        {
+            float offsetX = Random.Range(-1f, 1f) * currentCameraShakeIntensity;
+            float offsetY = Random.Range(-1f, 1f) * currentCameraShakeIntensity;
+            Vector2 offset = new Vector2(offsetX, offsetY);
+            cam.transform.position = Vector3.Lerp(cam.transform.position + (Vector3)offset, camTarget.position, camLerpSpeed * Time.deltaTime);
+        }
+    }
+
+    public void ShakeCamera(float duration, float intensity)
+    {
+        remainingCameraShakeTime = duration;
+        currentCameraShakeIntensity = intensity;
+    }
+
+    private void UpdateCamShake()
+    {
+        if(remainingCameraShakeTime > 0) remainingCameraShakeTime = 
+            Mathf.Clamp(remainingCameraShakeTime -= Time.deltaTime, 0, 100);
     }
 }

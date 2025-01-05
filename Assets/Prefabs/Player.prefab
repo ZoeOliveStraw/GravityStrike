@@ -4875,6 +4875,7 @@ GameObject:
   - component: {fileID: 3786017129472129261}
   - component: {fileID: 1060614487465586076}
   - component: {fileID: 12202480419061830}
+  - component: {fileID: 2186738892284958552}
   - component: {fileID: 2953201041626241233}
   - component: {fileID: 1368766743865504215}
   - component: {fileID: 860513616829947308}
@@ -4882,7 +4883,7 @@ GameObject:
   - component: {fileID: 6662236538205216216}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4942,6 +4943,18 @@ MonoBehaviour:
   lineRenderer: {fileID: 6662236538205216216}
   aimReticleLength: 2
   currentShotForce: 0
+--- !u!114 &2186738892284958552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8542031651893090306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71eb376399865b94b8eff1371143cdb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2953201041626241233
 MonoBehaviour:
   m_ObjectHideFlags: 0
