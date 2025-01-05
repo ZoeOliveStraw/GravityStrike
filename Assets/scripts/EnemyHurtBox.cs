@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyHurtBox : MonoBehaviour
@@ -10,9 +11,9 @@ public class EnemyHurtBox : MonoBehaviour
     }
 
 
-    public void death() {
-        // initialize particle field
-        // decrement count
-        // delete enemy
+    public void death() 
+    {
+        Instantiate(explosion, transform.position, Quaternion.identity);
+        Destroy(this.GameObject());
     }
 }

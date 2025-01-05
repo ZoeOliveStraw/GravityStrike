@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3350744565134134515}
   - component: {fileID: 1458815644690473800}
   - component: {fileID: 3009183693998704383}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Thruster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4844,13 +4844,14 @@ GameObject:
   - component: {fileID: 3786017129472129261}
   - component: {fileID: 4681331448471346649}
   - component: {fileID: -8073130352087253495}
+  - component: {fileID: 349703602625435603}
   - component: {fileID: 1368766743865504215}
   - component: {fileID: 860513616829947308}
   - component: {fileID: 2531943670960926432}
   - component: {fileID: 6195977331072374050}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4908,8 +4909,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 5
   damage: 20
-  rateOfFire: 0.5
+  rateOfFire: 0.3
   lineRenderer: {fileID: 6195977331072374050}
+--- !u!114 &349703602625435603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8542031651893090306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c91e861c3894418190d0aadde433033, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosion: {fileID: 1043881608924115468, guid: 5d9fdf11189f7514abf6451713792aeb, type: 3}
 --- !u!212 &1368766743865504215
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5053,7 +5067,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 17b862785054b3c43917ce02c707a427, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5085,7 +5099,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.07830858
         inSlope: 0
         outSlope: 0
         tangentMode: 0

@@ -36,6 +36,7 @@ public class EnemyMovement : MonoBehaviour
         Vector2 position = new Vector2(transform.position.x, transform.position.y);
         // if in a gravity hotspot, move away
         Vector2 current_gravity = GameManager.Instance.GravityFromPosition(position);
+        if (GameManager.Instance.player == null) return Vector2.zero;
         Vector2 player_position = GameManager.Instance.player.transform.position;
         Vector2 player_direction = (player_position - position).normalized;
         Vector2 gravity_direction = current_gravity.normalized;
