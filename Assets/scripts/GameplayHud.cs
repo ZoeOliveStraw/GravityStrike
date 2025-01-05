@@ -9,6 +9,7 @@ public class GameplayHud : MonoBehaviour
     [SerializeField] private Slider shieldSlider;
     [SerializeField] private Slider healthSlider;
     [SerializeField] public TextMeshProUGUI txtEnemyCount;
+    [SerializeField] public TextMeshProUGUI txtLivesCount;
     private GameObject playerPrefab;
     private PlayerShoot playerShoot;
     private PlayerHurtbox playerHurtbox;
@@ -78,5 +79,9 @@ public class GameplayHud : MonoBehaviour
     {
         currentEnemyCount--;
         RenderEnemyCount(currentEnemyCount);
+    }
+    
+    public void setLives(int lives) {
+        txtLivesCount.text = $"Lives: {lives}";
     }
 }

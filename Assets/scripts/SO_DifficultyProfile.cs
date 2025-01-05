@@ -8,6 +8,7 @@ public class SO_DifficultyProfile : ScriptableObject
     [SerializeField] public Vector2 starSizeRange;
     [SerializeField] public Vector2Int enemyCountRange;
     [SerializeField] public float minDistanceBetweenStarSurfaces;
+    [SerializeField] public int maxLives;
 
     public int GetStarCount()
     {

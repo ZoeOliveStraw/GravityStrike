@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     private List<Well> _wells;
     private List<Transform> _enemyTransforms;
     private GravityPlane _gravityPlane;
+    public int currentLives;
+    public StageInfo info;
     
     [Header("Sound Effects")]
     [SerializeField] private AudioSource audioSource;
@@ -41,7 +43,7 @@ public class GameManager : MonoBehaviour
     private void InitializeGame()
     {
         StageFactory factory = new StageFactory(5, 30, 30, difficultyProfile);
-        StageInfo info = factory.create();
+        info = factory.create();
         player = stageSpawner.SpawnStage(info);
         _gravityPlane = info.GravityPlane;
 

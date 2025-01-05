@@ -21,6 +21,7 @@ public class StageSpawner : MonoBehaviour
         SpawnStars(stageInfo.Wells);
         SpawnEnemies(stageInfo.Enemies);
         GameManager.Instance.HUD.RenderEnemyCount(stageInfo.Enemies.Count);
+        GameManager.Instance.HUD.setLives(GameManager.Instance.difficultyProfile.maxLives);
         return SpawnPlayer(stageInfo.LevelWidth, stageInfo.LevelHeight);
     }
     

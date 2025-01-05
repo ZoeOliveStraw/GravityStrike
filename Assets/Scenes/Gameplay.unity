@@ -828,7 +828,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'ENEMIES: 10'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4b31f0811a95b82489107760d0e352af, type: 2}
   m_sharedMaterial: {fileID: -3394137621481852054, guid: 4b31f0811a95b82489107760d0e352af, type: 2}

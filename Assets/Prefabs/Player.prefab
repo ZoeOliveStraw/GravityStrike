@@ -4957,9 +4957,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxShields: 0
   maxHealth: 0
+  maxLives: 3
   shieldRegenRate: 0
+  explosion: {fileID: 1043881608924115468, guid: f3196af5253de4e438c1260454b90307, type: 3}
   currentHealth: 0
   currentShields: 0
+  currentLives: 0
 --- !u!114 &2953201041626241233
 MonoBehaviour:
   m_ObjectHideFlags: 0
