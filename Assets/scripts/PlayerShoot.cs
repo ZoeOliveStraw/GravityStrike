@@ -53,6 +53,7 @@ public class PlayerShoot : MonoBehaviour
             Missile missile = Instantiate(missilePrefab, launchPosition, Quaternion.identity).GetComponent<Missile>();
             missile.FireZeMissile(shotForce * _aimVector);
             GameManager.Instance.PlaySoundEffect(GameManager.SoundEffects.MissileFire);
+            currentShotForce = 0;
         }
     }
 }

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Difficulty_Easy
   m_EditorClassIdentifier: 
   difficultyName: Easy
-  starCountRange: {x: 10, y: 15}
-  starSizeRange: {x: 1, y: 5}
-  enemyCountRange: {x: 3, y: 5}
-  minDistanceBetweenStarSurfaces: 5
+  starCountRange: {x: 20, y: 25}
+  starSizeRange: {x: 2, y: 5}
+  enemyCountRange: {x: 4, y: 6}
+  minDistanceBetweenStarSurfaces: 3
+  maxLives: 8

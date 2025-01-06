@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ProgressionManager : MonoBehaviour
 {
@@ -6,9 +7,9 @@ public class ProgressionManager : MonoBehaviour
 
     public SO_DifficultyProfile difficultyProfile;
     public SO_PhysicsConstants physicsProfile;
+    public int livesRemaining = 0;
 
-    private int _stage = 0;
-    private int _livesRemaining;
+    public int stage = 0;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,5 +26,10 @@ public class ProgressionManager : MonoBehaviour
     {
         difficultyProfile = difficulty;
         physicsProfile = physics;
+    }
+
+    public void SetStartingLives()
+    {
+        
     }
 }

@@ -4958,11 +4958,13 @@ MonoBehaviour:
   maxShields: 100
   maxHealth: 100
   maxLives: 3
-  shieldRegenRate: 1
+  shieldRegenRate: 4
   explosionParticles: {fileID: 1043881608924115468, guid: f3196af5253de4e438c1260454b90307, type: 3}
+  shieldRechargeDelay: 1
   currentHealth: 0
   currentShields: 0
   currentLives: 0
+  respawnInvulnerabilityTime: 4
 --- !u!114 &2953201041626241233
 MonoBehaviour:
   m_ObjectHideFlags: 0

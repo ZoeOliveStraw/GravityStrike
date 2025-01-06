@@ -23,6 +23,7 @@ public class Missile : MonoBehaviour
         CheckForEnemiesInRange();
         if (_homing)
         {
+            Debug.LogWarning("HOMING");
             Vector2 homingDirection = _homingTarget.position - transform.position;
             rb.AddForce(homingDirection * homingForce, ForceMode2D.Impulse);
         }

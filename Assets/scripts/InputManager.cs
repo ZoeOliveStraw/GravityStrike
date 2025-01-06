@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputManager
 {
@@ -28,7 +29,23 @@ public class InputManager
     {
         get
         {
-            return Controls.Player.Look.ReadValue<Vector2>();
+            if (Controls.Player.Look.ReadValue<Vector2>() != Vector2.zero)
+            {
+                return Controls.Player.Look.ReadValue<Vector2>();
+            }
+            if (Controls.Player.Aim.IsPressed() && GameManager.Instance != null)
+            {
+                if (GameManager.Instance.player != null)
+                {
+                    Vector3 playerPos = 
+                        Camera.main.WorldToScreenPoint(GameManager.Instance.player.transform.position);
+                    Vector2 pointerPosition = Pointer.current.position.ReadValue();
+                    Vector2 direction = (pointerPosition - (Vector2)playerPos).normalized;
+                    return direction;
+                }
+                return Vector2.zero;
+            }
+            return Vector2.zero;
         }
     }
 

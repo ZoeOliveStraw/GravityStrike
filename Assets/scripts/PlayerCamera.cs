@@ -46,6 +46,10 @@ public class PlayerCamera : MonoBehaviour
 
     private void LerpCamTowardsTarget()
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
         if (!cameraShaking)
         {
             cam.transform.position = Vector3.Lerp(cam.transform.position, camTarget.position, camLerpSpeed * Time.deltaTime);

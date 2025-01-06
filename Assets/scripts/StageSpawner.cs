@@ -15,11 +15,17 @@ public class StageSpawner : MonoBehaviour
     [SerializeField] private Transform starParent;
     [SerializeField] private Transform enemyParent;
     [SerializeField] private Transform gridPointParent;
+
+    [SerializeField] private GameObject boundaryLeft;
+    [SerializeField] private GameObject boundaryRight;
+    [SerializeField] private GameObject boundaryTop;
+    [SerializeField] private GameObject boundaryBottom;
     public GameObject SpawnStage(StageInfo stageInfo)
     {
         SpawnGrid(stageInfo.GravityPlane);
         SpawnStars(stageInfo.Wells);
         SpawnEnemies(stageInfo.Enemies);
+        SetBoundaries(stageInfo);
         GameManager.Instance.hud.RenderEnemyCount(stageInfo.Enemies.Count);
         GameManager.Instance.hud.setLives(GameManager.Instance.difficultyProfile.maxLives);
         GameManager.Instance.hud.RenderEnemyCount(stageInfo.Enemies.Count);
@@ -76,5 +82,23 @@ public class StageSpawner : MonoBehaviour
     {
         Vector3 pos = new Vector3((float) x / 2, (float) y / 2, 0);
         return Instantiate(playerPrefab, pos, Quaternion.identity);
+    }
+
+    private void SetBoundaries(StageInfo stageInfo)
+    {
+        int x = stageInfo.LevelWidth;
+        int y = stageInfo.LevelHeight;
+        
+        boundaryLeft.transform.position = new Vector2(-10, y / 2);
+        boundaryLeft.transform.localScale = new Vector2(1, y + 22);
+        
+        boundaryRight.transform.position = new Vector2(x + 10, y / 2);
+        boundaryRight.transform.localScale = new Vector2(1, y + 22);
+        
+        boundaryTop.transform.position = new Vector2(x / 2, y + 10);
+        boundaryTop.transform.localScale = new Vector2(x + 22, 1);
+        
+        boundaryBottom.transform.position = new Vector2(x / 2, -10);
+        boundaryBottom.transform.localScale = new Vector2(x + 22, 1);
     }
 }

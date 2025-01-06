@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Difficulty_Normal
   m_EditorClassIdentifier: 
   difficultyName: Normal
-  starCountRange: {x: 10, y: 15}
-  starSizeRange: {x: 1, y: 3}
-  enemyCountRange: {x: 3, y: 5}
+  starCountRange: {x: 20, y: 25}
+  starSizeRange: {x: 2, y: 5}
+  enemyCountRange: {x: 6, y: 8}
   minDistanceBetweenStarSurfaces: 3
+  maxLives: 5

@@ -30,14 +30,17 @@ public class StageFactory
         EnemyCountRange = enemy_count_range;
     }
     
-    public StageFactory(int resolution, int width, int height, SO_DifficultyProfile difficulty)
+    public StageFactory(int resolution, int width, int height, SO_DifficultyProfile difficulty, int stage)
     {
+        Vector2Int wellCount = new Vector2Int(difficulty.starCountRange.x + stage, difficulty.starCountRange.y + stage);
+        Vector2Int enemyCount = new Vector2Int(difficulty.enemyCountRange.x + stage, difficulty.enemyCountRange.y + stage);
+        
         Width = width;
         Height = height;
         Resolution = resolution;
-        WellCountRange = difficulty.starCountRange;
+        WellCountRange = wellCount;
         WellSizeRange = difficulty.starSizeRange;
-        EnemyCountRange = difficulty.enemyCountRange;
+        EnemyCountRange = enemyCount;
     }
 
     public StageInfo create() {
@@ -60,10 +63,10 @@ public class StageFactory
         Vector2 spawn_point = new Vector2(Width * 0.5f, Height * 0.5f);
 
         int maxAttempts = 20;
-        int attemptCount = 0;
 
         for (int i = 0; i < enemy_count; i++)
         {
+            int attemptCount = 0;
             bool isValidLocation = false;
             Enemy temp_enemy = null;
 
@@ -95,7 +98,8 @@ public class StageFactory
         return enemies;
     }
 
-    public List<Well> generateWells() {
+    public List<Well> generateWells() 
+    {
         int well_count = Random.Range(Mathf.FloorToInt(WellCountRange.x), Mathf.CeilToInt(WellCountRange.y));
         List<Well> wells = new List<Well>();
 
@@ -103,10 +107,10 @@ public class StageFactory
         float minDistance = GameManager.Instance.difficultyProfile.minDistanceBetweenStarSurfaces;
 
         int maxAttempts = 20;
-        int attemptCount = 0;
 
         for (int i = 0; i < well_count; i++)
         {
+            int attemptCount = 0;
             bool isValidLocation = false;
             Well temp_well = null;
 

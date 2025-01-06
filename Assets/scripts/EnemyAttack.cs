@@ -58,6 +58,7 @@ public class EnemyAttack : MonoBehaviour
             lineRenderer.SetPosition(1, (Vector2) transform.position - vectorToPlayer);
             _currentCooldown = rateOfFire;
             _player.gameObject.GetComponent<PlayerHurtbox>().TakeDamage(damage);
+            GameManager.Instance.PlaySoundEffect(GameManager.SoundEffects.Laser);
         }
     }
 

@@ -60,4 +60,9 @@ public class LoadingShade : MonoBehaviour
             parentObject.SetActive(false);
         }
     }
+
+    public void SetText(string text)
+    {
+        loadingText.text = text;
+    }
 }

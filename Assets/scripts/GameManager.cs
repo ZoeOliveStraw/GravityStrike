@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
@@ -11,7 +12,8 @@ public class GameManager : MonoBehaviour
         MissileFire,
         MissileExplode,
         ShipThruster,
-        MissileThruster
+        Laser,
+        Pause
     }
     
     public static GameManager Instance;
@@ -22,6 +24,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Camera sceneCamera;
     [SerializeField] public GameplayHud hud;
     [SerializeField] public LoadingShade loadingShade;
+    [SerializeField] public LoadingShade gameOverScreen;
+    [SerializeField] public GameObject pauseScreen;
 
     public GameObject player;
     private List<Well> _wells;
@@ -35,7 +39,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip missileFire;
     [SerializeField] private AudioClip missileExplode;
     [SerializeField] private AudioClip shipThruster;
-    [SerializeField] private AudioClip missileThruster;
+    [SerializeField] private AudioClip laserShoot;
+    [SerializeField] private AudioClip pauseClip;
 
     private void Start()
     {
@@ -44,6 +49,7 @@ public class GameManager : MonoBehaviour
             physicsConstants = ProgressionManager.Instance.physicsProfile;
             difficultyProfile = ProgressionManager.Instance.difficultyProfile;
         }
+        InputManager.Controls.Player.Pause.performed += ctx => TogglePause();
         Instance = this;
         StartCoroutine(StartGameCoroutine());
     }
@@ -58,7 +64,10 @@ public class GameManager : MonoBehaviour
 
     private void InitializeGame()
     {
-        StageFactory factory = new StageFactory(5, 30, 30, difficultyProfile);
+        int stage;
+        if(ProgressionManager.Instance != null) stage = ProgressionManager.Instance.stage;
+        else stage = 0;
+        StageFactory factory = new StageFactory(5, 50, 50, difficultyProfile, stage);
         info = factory.create();
         player = stageSpawner.SpawnStage(info);
         _gravityPlane = info.GravityPlane;
@@ -88,14 +97,48 @@ public class GameManager : MonoBehaviour
             case SoundEffects.ShipThruster:
                 audioSource.PlayOneShot(shipThruster);
                 break;
-            case SoundEffects.MissileThruster:
-                audioSource.PlayOneShot(missileThruster);
+            case SoundEffects.Laser:
+                audioSource.PlayOneShot(laserShoot);
+                break;
+            case SoundEffects.Pause:
+                audioSource.PlayOneShot(pauseClip);
                 break;
         }
     }
 
+    public void GameOver()
+    {
+        StartCoroutine(EndGameCoroutine());
+    }
+
+    private IEnumerator EndGameCoroutine()
+    {
+        gameOverScreen.SetText($"GAME OVER\nSTAGE {ProgressionManager.Instance.stage}");
+        gameOverScreen.FadeIn(1);
+        yield return new WaitForSeconds(10f);
+        SceneManager.LoadScene("MainMenu");
+    }
+
     public void ZeroEnemiesRemaining()
     {
-        
+        StartCoroutine(NextLevelCoroutine());
+    }
+
+    private IEnumerator NextLevelCoroutine()
+    {
+        player.gameObject.SetActive(false);
+        ProgressionManager.Instance.stage++;
+        ProgressionManager.Instance.livesRemaining = player.GetComponent<PlayerHurtbox>().currentLives;
+        loadingShade.SetText($"NEXT STAGE {ProgressionManager.Instance.stage + 1}");
+        loadingShade.FadeIn(1);
+        yield return new WaitForSeconds(4f);
+        SceneManager.LoadScene("Gameplay");
+    }
+
+    private void TogglePause()
+    {
+        bool pause = pauseScreen.activeSelf;
+        Time.timeScale = pause ? 1 : 0;
+        pauseScreen.SetActive(!pause);
     }
 }

@@ -4885,10 +4885,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidBody2D: {fileID: 860513616829947308}
-  thrusterStrength: 2
+  thrusterStrength: 4
   angleToThruster: 75
   rotationSpeed: 10
-  maxVelocity: 0.4
+  maxVelocity: 2
   gravityScale: 0.01
   thrusterParticles: {fileID: 1458815644690473800}
   minMaxParticleRate: {x: 10, y: 20}

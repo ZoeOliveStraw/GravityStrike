@@ -30,6 +30,7 @@ public class GameplayHud : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
         }
+        setLives(GameManager.Instance.difficultyProfile.maxLives);
         playerPrefab = GameManager.Instance.player;
         InitializeShotSlider();
         InitializeHealthSlider();
@@ -46,12 +47,14 @@ public class GameplayHud : MonoBehaviour
     private void InitializeHealthSlider()
     {
         playerHurtbox = playerPrefab.GetComponent<PlayerHurtbox>();
-        // healthSlider.maxValue = playerHurtbox.maxHealth;
+        healthSlider.maxValue = playerHurtbox.maxHealth;
+        healthSlider.value = playerHurtbox.currentHealth;
     }
     
     private void InitializeShieldSlider()
     {
         shieldSlider.maxValue = playerHurtbox.maxShields;
+        shieldSlider.value = playerHurtbox.currentShields;
     }
 
     
@@ -61,12 +64,6 @@ public class GameplayHud : MonoBehaviour
         {
             powerSlider.value = playerShoot.currentShotForce;
         }
-
-        if (playerHurtbox != null)
-        {
-            // healthSlider.value = playerHurtbox.currentHealth;
-            // shieldSlider.value = playerHurtbox.currentShields;
-        }
     }
 
     public void RenderEnemyCount(int num)
@@ -75,14 +72,21 @@ public class GameplayHud : MonoBehaviour
         txtEnemyCount.text = $"Enemies: {currentEnemyCount}";
     }
 
+    public void RenderHealthShields()
+    {
+        healthSlider.value = playerHurtbox.currentHealth;
+        shieldSlider.value = playerHurtbox.currentShields;
+    }
+
     public void DecrementEnemyCount()
     {
         currentEnemyCount--;
         RenderEnemyCount(currentEnemyCount);
+        if(currentEnemyCount <= 0) GameManager.Instance.ZeroEnemiesRemaining();
     }
     
     public void setLives(int lives) 
     {
-        txtLivesCount.text = $"Lives: {lives}";
+        txtLivesCount.text = $"EXTRA LIVES: {lives}";
     }
 }

@@ -33,6 +33,7 @@ public class MainMenu : MonoBehaviour
         while(ProgressionManager.Instance == null) yield return null;
         _controls.Player.Previous.performed += context => SetGameMode(-1);
         _controls.Player.Next.performed += context => SetGameMode(1);
+        _controls.UI.Submit.performed += context => StartGame();
         currentGameModeIndex = 1;
         SetGameModeByIndex();
     }
@@ -46,6 +47,7 @@ public class MainMenu : MonoBehaviour
     {
         loadingShade.FadeIn(seconds);
         yield return new WaitForSeconds(seconds);
+        ProgressionManager.Instance.stage = 0;
         SceneManager.LoadScene("Gameplay");
     }
 
